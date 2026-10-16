@@ -1,0 +1,17 @@
+{
+  "name": "Lulyboo Dashboard",
+  "short_name": "Lulyboo",
+  "description": "Lulyboo Follow-Up Orders Dashboard",
+  "id": "/lulyboo-dashboard/",
+  "start_url": "/lulyboo-dashboard/index.html",
+  "scope": "/lulyboo-dashboard/",
+  "display": "standalone",
+  "background_color": "#FFFCF8",
+  "theme_color": "#80D0D0",
+  "orientation": "any",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
