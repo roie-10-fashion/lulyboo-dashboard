@@ -95,6 +95,13 @@ tfoot td{font-weight:600;border-top:2px solid var(--line);border-bottom:0;backgr
 .note{font-size:11.5px;color:var(--ink-2);white-space:normal;min-width:160px;max-width:280px}
 .sub{font-size:11px;color:var(--ink-2)}
 .pending td{color:var(--ink-2)}
+.porow{cursor:pointer}.porow.pending{cursor:default}
+.porow.isopen td{background:#F2FAF9}
+.chev{color:var(--teal-d);font-size:12px}
+.invsub>td{padding:0;background:#FBFCFC}
+.inner{padding:8px 18px 14px 46px}
+.inner table td{border-bottom:1px dashed var(--line);padding:8px 10px;font-size:12.5px}
+.tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:5px}.tag.L{background:#E2F6F5;color:var(--teal-xd)}.tag.E{background:#EDE7F3;color:#6A4E86}
 .nbtn{background:none;border:0;cursor:pointer;font-size:16px;padding:2px 4px}
 .two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}.two .card{margin-bottom:20px}
 .info{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;font-size:13px;margin-bottom:14px}
@@ -167,7 +174,7 @@ footer{text-align:center;color:var(--ink-2);font-size:11.5px;padding:20px}
 </section>
 
 <section class="page" id="p-invoices">
-  <h2>Invoices</h2><p class="lead">One line per PO: main invoice (LTSI) + extra cost invoice (LFDB) together.</p>
+  <h2>Invoices</h2><p class="lead">One line per PO. Click a line to see its invoices (LTSI + extra cost).</p>
   <div class="tools"><div class="yr" id="iyr"></div><input id="iq" placeholder="Search PO, booking, invoice no…"><select id="is"><option value="">All statuses</option><option>Paid</option><option>Partial</option><option>Open</option><option>Pending</option></select><span class="cnt" id="icnt"></span></div>
   <div class="card"><div class="tw"><table id="it"></table></div></div>
 </section>
@@ -210,7 +217,7 @@ footer{text-align:center;color:var(--ink-2);font-size:11.5px;padding:20px}
 
 <script>
 /* ===== DATA — filled automatically by LULYBOO_update_dashboard.py (do not edit by hand) ===== */
-const UPDATED="17/10/2026 00:55";
+const UPDATED="17/10/2026 01:12";
 const ITEM_IMG={"DPS 001":"files/items/DPS-001.jpg","UPS 001":"files/items/UPS-001.jpg"};
 const ORDERS=[{"po":"310","date":"2025-10-28","person":"Joey","item":"Dino Potty Seat","itemNo":"DPS 001","color":"Deep blue-gray","qty":2832.0,"fob":3.15,"ready":"2025-12-29","etd":"2026-01-11","eta":"2026-02-11","status":"Delivered","link":"https://drive.google.com/file/d/1I-_dtE4W51eTv359QmCVk_TCbHF37kEf/view?usp=drive_link","note":""},{"po":"311","date":"2026-02-04","person":"Joey","item":"Dino Potty Seat","itemNo":"DPS 001","color":"Deep blue-gray","qty":3500.0,"fob":3.15,"ready":"2026-03-23","etd":"2026-04-05","eta":"2026-05-05","status":"Delivered","link":"https://drive.google.com/file/d/1JeBZwnCGxfNZ2snIDUl6KicVaqIwoMfD/view?usp=drive_link","note":""},{"po":"312","date":"2026-04-14","person":"Joey","item":"Dino Potty Seat","itemNo":"DPS 001","color":"Deep blue-gray","qty":3672.0,"fob":3.15,"ready":"2026-05-21","etd":"2026-08-13","eta":"2026-09-03","status":"Delivered","link":"https://drive.google.com/file/d/1o2qxfIj8xVgvpNt8ommNZWBHvFtbTy2Z/view?usp=drive_link","note":""},{"po":"313","date":"2026-04-29","person":"Joey","item":"Unicorn Potty Seat","itemNo":"UPS 001","color":"White & Light Pink","qty":3500.0,"fob":2.9,"ready":"2026-08-21","etd":"2026-09-17","eta":"2026-10-12","status":"Shipped","link":"https://drive.google.com/file/d/11LghNaffweDBwDTE3xNm4UAdcoDeLf2d/view?usp=drive_link","note":""},{"po":"314","date":"2026-04-29","person":"Joey","item":"Unicorn Potty Seat","itemNo":"UPS 001","color":"White & Light Pink","qty":3500.0,"fob":2.9,"ready":"2026-08-21","etd":"2026-09-17","eta":"2026-10-12","status":"Shipped","link":"https://drive.google.com/file/d/1_K1WKqNNdwxAyrNmqJpxcOH6s2TUAnSk/view?usp=drive_link","note":""},{"po":"310002","date":"2026-08-04","person":"Joey","item":"Dino Potty Seat","itemNo":"DPS 001","color":"Deep blue-gray","qty":3768.0,"fob":2.9,"ready":"2026-09-24","etd":"","eta":"","status":"In Production","link":"https://drive.google.com/file/d/1TkSHAzcLJuDg3y22IaZdCwzBIH78ibAT/view?usp=drive_link","note":""}];
 const INVOICES=[{"po":"310","type":"LTSI","no":"LTSI26010004","booking":"LULYBOO2601001","date":"2026-01-06","amount":4474.56,"paid":4474.56,"link":"https://docs.google.com/spreadsheets/d/1W17xbUWVljJcaUqXG4HUcO5holrWg_oT/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"310","type":"EXTRA COST","no":"LFDB26020003","booking":"","date":"2026-02-03","amount":4446.24,"paid":4446.24,"link":"https://drive.google.com/file/d/10b1nIerRWesRopVjQwd9IURwNEQqwAVl/view?usp=drive_link","note":"Part of LFDB26020003 - total 4,885.63"},{"po":"311","type":"LTSI","no":"LTSI26030056","booking":"LULYBOO2603002","date":"2026-03-30","amount":5530.0,"paid":5530.0,"link":"https://docs.google.com/spreadsheets/d/1Mh6P4wg6ZznEmhV2Bvakco3eASAZit4E/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"311","type":"EXTRA COST","no":"LFDB26040006","booking":"","date":"2026-03-14","amount":5495.0,"paid":5495.0,"link":"https://drive.google.com/file/d/1hO-BpQPH6oJkk1gtUuaiPzKinkm7ptz_/view?usp=drive_link","note":""},{"po":"312","type":"LTSI","no":"LTSI26080018","booking":"LULYBOO2608004","date":"2026-08-09","amount":5801.76,"paid":5801.76,"link":"https://docs.google.com/spreadsheets/d/1MXoivJDaSHqHatX_qU3gIkIVMNfTgNiC/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"312","type":"EXTRA COST","no":"LFDB26080011","booking":"LULYBOO2608004","date":"2026-08-09","amount":5765.04,"paid":5765.04,"link":"https://drive.google.com/file/d/1FmeVb7WLCglZ-DksShcE2N7mRO3hupB9/view?usp=drive_link","note":""},{"po":"313","type":"LTSI","no":"LTSI26090021","booking":"LULYBOO2609005","date":"2026-09-09","amount":1740.0,"paid":1740.0,"link":"https://drive.google.com/file/d/12a3V2mG9M6OAOgF7Cz51D2YB6474EmOh/view?usp=drive_link","note":""},{"po":"313","type":"EXTRA COST","no":"LFDB26090021","booking":"LULYBOO2609005","date":"2026-09-11","amount":1740.0,"paid":1740.0,"link":"https://docs.google.com/spreadsheets/d/1B1Hw5heBuw1kOSpde4YIG--cWs_Z1JCr/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"314","type":"LTSI","no":"LTSI26090027","booking":"LULYBOO2609006","date":"2026-09-08","amount":4176.0,"paid":4176.0,"link":"https://docs.google.com/spreadsheets/d/192vwnzVM5O71S_Fg2uYNtuWPFHnbFHvq/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"314","type":"EXTRA COST","no":"LFDB26090022","booking":"LULYBOO2609006","date":"2026-09-11","amount":4176.0,"paid":4176.0,"link":"https://drive.google.com/file/d/1D84BaevcIf3WDBVGBHTEH5-Agxg_EfZP/view?usp=drive_link","note":""},{"po":"313+314","type":"LTSI","no":"LTSI26090035","booking":"LULYBOO2609006","date":"2026-09-08","amount":4234.0,"paid":4234.0,"link":"https://docs.google.com/spreadsheets/d/1IEaXHOUD1Jtljcxkz4r92txuBiHatFli/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"313+314","type":"EXTRA COST","no":"LFDB26090023","booking":"LULYBOO2609007","date":"2026-09-11","amount":4234.0,"paid":3623.24,"link":"https://drive.google.com/file/d/1Km4xHuSAowqDI63_7I172dHBWLCma_CE/view?usp=drive_link","note":"need to paid 610.76$"}];
@@ -325,16 +332,19 @@ const poBtn=o=>o.link?`<button class="polink" onclick="openView(${vid(o.link,"PO
 function renderOrders(){
   const q=$("#oq").value.toLowerCase(),s=$("#os").value;
   const rows=ORDERS.filter(o=>(!s||o.status===s)&&(!q||JSON.stringify(o).toLowerCase().includes(q)));
-  let h=`<thead><tr><th>Pic</th><th>PO</th><th>Order date</th><th>Person</th><th>Item</th><th>Item no.</th><th>Color</th><th class="num">Qty</th><th class="num">FOB</th><th class="num">Total</th><th>Goods ready</th><th>ETD</th><th>ETA</th><th>Status</th><th>PO</th><th>Notes</th></tr></thead><tbody>`;
-  rows.forEach(o=>{h+=`<tr><td>${img(o)}</td><td><b>${esc(o.po)}</b></td><td>${d(o.date)}</td><td>${esc(o.person)}</td><td>${esc(o.item)}</td><td>${esc(o.itemNo)}</td><td>${esc(o.color)}</td>
+  const hasNotes=ORDERS.some(o=>o.note);
+  let h=`<thead><tr><th>Pic</th><th>PO</th><th>PO file</th><th>Order date</th><th>Person</th><th>Item</th><th>Color</th><th class="num">Qty</th><th class="num">FOB</th><th class="num">Total</th><th>Goods ready</th><th>ETD</th><th>ETA</th><th>Status</th>${hasNotes?"<th>Notes</th>":""}</tr></thead><tbody>`;
+  rows.forEach(o=>{h+=`<tr><td>${img(o)}</td><td><b>${esc(o.po)}</b></td><td>${link(o.link,"PO","PO "+o.po)}</td><td>${d(o.date)}</td><td>${esc(o.person)}</td>
+    <td>${esc(o.item)}<br><span class="sub">${esc(o.itemNo)}</span></td><td>${esc(o.color)}</td>
     <td class="num">${qty(o.qty)}</td><td class="num">${money(o.fob)}</td><td class="num"><b>${money(orderTotal(o))}</b></td><td>${d(o.ready)}</td><td>${d(o.etd)}</td><td>${d(o.eta)}</td>
-    <td>${pill(o.status)}</td><td>${link(o.link,"PO","PO "+o.po)}</td><td class="note">${esc(o.note)}</td></tr>`});
-  h+=`</tbody><tfoot><tr><td colspan="7">Total · ${rows.length} orders</td><td class="num">${qty(rows.reduce((a,o)=>a+(+o.qty||0),0))}</td><td></td><td class="num">${money(rows.reduce((a,o)=>a+orderTotal(o),0))}</td><td colspan="6"></td></tr></tfoot>`;
+    <td>${pill(o.status)}</td>${hasNotes?`<td class="note">${esc(o.note)}</td>`:""}</tr>`});
+  h+=`</tbody><tfoot><tr><td colspan="7">Total · ${rows.length} orders</td><td class="num">${qty(rows.reduce((a,o)=>a+(+o.qty||0),0))}</td><td></td><td class="num">${money(rows.reduce((a,o)=>a+orderTotal(o),0))}</td><td colspan="${hasNotes?5:4}"></td></tr></tfoot>`;
   $("#ot").innerHTML=h;
 }
 
-/* ---------- invoices: one row per PO ---------- */
-let YEAR="All";
+/* ---------- invoices: one clean row per PO, click to open its invoices ---------- */
+let YEAR="All";const OPEN=new Set();
+function toggleInv(po){OPEN.has(po)?OPEN.delete(po):OPEN.add(po);renderInvoices()}
 function renderInvoices(){
   const years=[...new Set(POS.map(b=>b.year).filter(Boolean))].sort();
   $("#iyr").innerHTML=["All",...years].map(y=>`<button class="${y===YEAR?"on":""}" onclick="YEAR='${y}';renderInvoices()">${y}</button>`).join("");
@@ -342,16 +352,27 @@ function renderInvoices(){
   const rows=POS.filter(b=>(YEAR==="All"||b.year===YEAR)&&(!s||b.status===s)&&
     (!q||(b.o.po+" "+[...b.books].join(" ")+" "+b.inv.map(i=>i.no).join(" ")).toLowerCase().includes(q)));
   $("#icnt").textContent=rows.length+" / "+POS.length;
-  let h=`<thead><tr><th>PO</th><th>Invoice date</th><th>Booking no.</th><th>Invoices</th><th class="num">Amount $</th><th class="num">Paid $</th><th class="num">Open $</th><th>ETD</th><th>ETA</th><th>Status</th><th>Notes</th></tr></thead><tbody>`;
-  rows.forEach(b=>{const o=b.o,pend=b.status==="Pending";
-    const il=b.inv.map(i=>{const typ=/^LTSI/i.test(i.type)?"L":"E";
-      return `<div class="irow"><span class="t ${typ}">${typ==="L"?"LTSI":"EXTRA"}</span>${i.link?`<button onclick="openView(${vid(i.link,i.no+" · PO "+i.po)})">${esc(i.no)}</button>`:`<span>${esc(i.no)}</span>`}<span class="a">${money(i.share??i.amount)}${i.share!=null?` <span title="Shared invoice ${esc(i.po)}: ${money(i.amount)}">(of ${money(i.amount)})</span>`:""}</span></div>`}).join("");
-    const notes=b.inv.map(i=>i.note).filter(Boolean);if(pend)notes.unshift("Not invoiced yet");
-    h+=`<tr class="${pend?"pending":""}"><td>${poBtn(o)}</td><td>${b.dates.length?[...new Set(b.dates)].map(d).join("<br>"):DASH}</td><td>${b.books.size?[...b.books].map(esc).join("<br>"):DASH}</td>
-    <td>${il?`<div class="ilist">${il}</div>`:DASH}</td><td class="num"><b>${money(pend?b.total:b.amt)}</b></td><td class="num" style="color:var(--ok)">${b.paid?money(b.paid):DASH}</td>
-    <td class="num">${b.open>0.005?"<b>"+money(b.open)+"</b>":DASH}</td><td>${d(o.etd)}</td><td>${d(o.eta)}</td><td>${pill(b.status)}</td><td class="note">${esc(notes.join(" · "))}</td></tr>`});
+  let h=`<thead><tr><th style="width:28px"></th><th>PO</th><th>Invoice date</th><th class="num">Amount $</th><th class="num">Paid $</th><th class="num">Open $</th><th>Progress</th><th>ETD</th><th>ETA</th><th>Status</th></tr></thead><tbody>`;
+  rows.forEach(b=>{const o=b.o,pend=b.status==="Pending",isOpen=OPEN.has(o.po),t=(pend?b.total:b.amt)||1;
+    const pw=Math.min(100,b.paid/t*100),ow=Math.min(100-pw,b.open/t*100);
+    h+=`<tr class="porow ${pend?"pending":""} ${isOpen?"isopen":""}" ${pend?"":`onclick="toggleInv('${esc(o.po)}')"`}>
+      <td>${pend?"":`<span class="chev">${isOpen?"▾":"▸"}</span>`}</td><td><b>PO ${esc(o.po)}</b> <span class="sub">${b.inv.length?b.inv.length+" invoices":""}</span></td>
+      <td>${b.dates.length?d(b.dates[0]):DASH}</td><td class="num"><b>${money(pend?b.total:b.amt)}</b></td>
+      <td class="num" style="color:var(--ok)">${b.paid?money(b.paid):DASH}</td><td class="num">${b.open>0.005?"<b>"+money(b.open)+"</b>":DASH}</td>
+      <td><div class="bar"><i class="paid" style="width:${pw}%"></i><i class="open" style="width:${ow}%"></i></div></td>
+      <td>${d(o.etd)}</td><td>${d(o.eta)}</td><td>${pill(b.status)}${pend?' <span class="sub">Not invoiced yet</span>':""}</td></tr>`;
+    if(isOpen&&!pend){
+      const notes=[...new Set(b.inv.map(i=>i.note).filter(Boolean))];
+      h+=`<tr class="invsub"><td colspan="10"><div class="inner"><table>${b.inv.map(i=>{const L=/^LTSI/i.test(i.type);
+        const others=poList(i.po).filter(p=>p!==o.po);
+        return `<tr><td style="width:70px"><span class="tag ${L?"L":"E"}">${L?"LTSI":"EXTRA"}</span></td>
+          <td><b>${esc(i.no)}</b>${others.length?` <span class="sub">shared with ${others.map(esc).join(", ")}</span>`:""}</td>
+          <td>${d(i.date)}</td><td>${esc(i.booking)||DASH}</td>
+          <td class="num">${money(i.share??i.amount)}${i.share!=null?` <span class="sub">of ${money(i.amount)}</span>`:""}</td>
+          <td>${pill(statusOf(+i.amount||0,+i.paid||0))}</td><td>${link(i.link,"Invoice",i.no+" · PO "+i.po)}</td></tr>`}).join("")}</table>
+        ${notes.length?`<div class="sub" style="margin-top:8px">📝 ${notes.map(esc).join(" · ")}</div>`:""}</div></td></tr>`}});
   const inv=rows.filter(b=>b.status!=="Pending");
-  h+=`</tbody><tfoot><tr><td colspan="4">Total invoiced · ${inv.length} POs${rows.length>inv.length?` <span class="sub">(+${rows.length-inv.length} pending, not counted)</span>`:""}</td><td class="num">${money(inv.reduce((a,b)=>a+b.amt,0))}</td><td class="num">${money(inv.reduce((a,b)=>a+b.paid,0))}</td><td class="num">${money(inv.reduce((a,b)=>a+b.open,0))}</td><td colspan="4"></td></tr></tfoot>`;
+  h+=`</tbody><tfoot><tr><td></td><td colspan="2">Total invoiced · ${inv.length} POs${rows.length>inv.length?` <span class="sub">(+${rows.length-inv.length} pending)</span>`:""}</td><td class="num">${money(inv.reduce((a,b)=>a+b.amt,0))}</td><td class="num">${money(inv.reduce((a,b)=>a+b.paid,0))}</td><td class="num">${money(inv.reduce((a,b)=>a+b.open,0))}</td><td colspan="4"></td></tr></tfoot>`;
   $("#it").innerHTML=h;
 }
 
