@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lulyboo Dashboard</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#80D0D0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --mint:#7FE2D8; --teal:#80D0D0; --teal-d:#2E9A9A; --teal-xd:#1F6F6F;
+  --sun:#F2B32A; --sun-l:#FFF3D6; --peach:#F4B9A9; --peach-l:#FDEDE8;
+  --ink:#373330; --ink-2:#6B6560; --line:#ECE7E1; --bg:#FFFCF8; --card:#FFFFFF;
+  --ok:#2E9A6B; --ok-l:#E3F5EC; --bad:#D9534F; --bad-l:#FCE9E8;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:Poppins,system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px}
+.band{height:8px;background:var(--mint)}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.hwrap{max-width:1360px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.logo{height:40px;display:block}
+.hsub{font-size:12px;color:var(--ink-2);line-height:1.35;border-left:2px solid var(--line);padding-left:16px}
+.hsub b{color:var(--ink);font-weight:600;display:block;font-size:13px}
+nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+nav button{font:inherit;font-size:13px;font-weight:500;border:0;background:none;color:var(--ink-2);padding:8px 14px;border-radius:999px;cursor:pointer}
+nav button:hover{background:var(--peach-l);color:var(--ink)}
+nav button.on{background:var(--teal);color:#fff}
+main{max-width:1360px;margin:0 auto;padding:24px 20px 60px}
+.page{display:none}.page.on{display:block}
+h2{font-size:20px;font-weight:600;margin:0 0 4px}
+.lead{color:var(--ink-2);margin:0 0 20px;font-size:13px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--teal)}
+.kpi.sun::before{background:var(--sun)}.kpi.peach::before{background:var(--peach)}.kpi.ok::before{background:var(--ok)}
+.kpi .l{font-size:11.5px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.04em}
+.kpi .v{font-size:22px;font-weight:600;margin-top:4px;font-variant-numeric:tabular-nums}
+.kpi .s{font-size:11.5px;color:var(--ink-2);margin-top:2px}
+.kpi .rate{height:6px;background:#F1EEEA;border-radius:9px;margin-top:8px;overflow:hidden}.kpi .rate i{display:block;height:100%;background:var(--ok)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:20px}
+.card h3{margin:0 0 14px;font-size:15px;font-weight:600}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.tools input,.tools select{font:inherit;font-size:13px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+.tools input{min-width:220px}
+.yr{display:flex;gap:6px}
+.yr button{font:inherit;font-size:12.5px;border:1px solid var(--line);background:#fff;color:var(--ink-2);padding:7px 14px;border-radius:10px;cursor:pointer}
+.yr button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.cnt{font-size:12px;color:var(--ink-2)}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-2);padding:10px;border-bottom:2px solid var(--line);white-space:nowrap;background:#fff}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle;white-space:nowrap}
+tr:hover td{background:#FFFAF2}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tfoot td{font-weight:600;border-top:2px solid var(--line);border-bottom:0;background:#FBF8F4}
+.pic{width:52px;height:52px;object-fit:contain;border-radius:10px;background:#F7F5F2;display:block}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11.5px;font-weight:500}
+.p-teal{background:#E2F4F4;color:var(--teal-xd)}.p-sun{background:var(--sun-l);color:#8A6200}
+.p-peach{background:var(--peach-l);color:#A0503B}.p-ok{background:var(--ok-l);color:var(--ok)}
+.p-bad{background:var(--bad-l);color:var(--bad)}.p-gray{background:#F1EEEA;color:var(--ink-2)}
+.lnk{font:inherit;font-size:12px;color:var(--teal-d);font-weight:500;background:none;border:1px solid #CDEBEB;border-radius:8px;padding:4px 10px;cursor:pointer;white-space:nowrap}
+.lnk:hover{background:#E2F4F4}
+.polink{font:inherit;font-weight:600;color:var(--ink);background:none;border:0;padding:0;cursor:pointer;border-bottom:1px dashed var(--teal-d)}
+.polink:hover{color:var(--teal-d)}
+.ilist{display:flex;flex-direction:column;gap:4px}
+.irow{display:flex;align-items:center;gap:8px;font-size:12.5px}
+.irow .t{font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:6px}
+.irow .t.L{background:#E2F4F4;color:var(--teal-xd)}.irow .t.E{background:var(--peach-l);color:#A0503B}
+.irow button{font:inherit;font-size:12.5px;font-weight:600;color:var(--ink);background:none;border:0;padding:0;cursor:pointer;border-bottom:1px dashed var(--teal-d)}
+.irow button:hover{color:var(--teal-d)}
+.irow .a{color:var(--ink-2);font-size:11.5px}
+.muted{color:#B4ADA6}
+.bar{height:8px;background:#F1EEEA;border-radius:999px;overflow:hidden;min-width:120px;display:flex}
+.bar i{display:block;height:100%}.bar .paid{background:var(--teal)}.bar .open{background:var(--sun)}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--ink-2);margin-bottom:10px;flex-wrap:wrap}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--c)}
+.empty{text-align:center;color:var(--ink-2);padding:40px 10px}
+.empty b{display:block;font-size:15px;color:var(--ink);margin-bottom:4px}
+.note{font-size:11.5px;color:var(--ink-2);white-space:normal;min-width:160px;max-width:280px}
+.sub{font-size:11px;color:var(--ink-2)}
+.pending td{color:var(--ink-2)}
+.nbtn{background:none;border:0;cursor:pointer;font-size:16px;padding:2px 4px}
+footer{text-align:center;color:var(--ink-2);font-size:11.5px;padding:20px}
+/* PDF viewer + notes modal (same behaviour as KS) */
+#pdfViewer{display:none;position:fixed;inset:0;z-index:9999;flex-direction:column;background:var(--teal-xd)}
+#pdfViewer .vbar{display:flex;align-items:center;gap:10px;padding:max(14px,env(safe-area-inset-top,14px)) 14px 10px;flex-shrink:0}
+#pdfViewer .vbtn{background:rgba(255,255,255,.22);border:0;color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer;padding:9px 18px;border-radius:10px;white-space:nowrap}
+#pdfViewer .vbtn:hover{background:rgba(255,255,255,.35)}
+#pdfViewer .vx{font-size:20px;padding:6px 14px}
+#viewerTitle{color:#fff;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+#viewerFrame{flex:1;width:100%;border:0;background:#fff}
+#pdfViewer .vclose{flex-shrink:0;background:#E8806B;padding:16px 16px max(16px,env(safe-area-inset-bottom,16px));text-align:center;cursor:pointer;user-select:none;color:#fff;font-size:18px;font-weight:700;letter-spacing:1px}
+#pdfViewer .vclose:hover{background:#DD6C55}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(55,51,48,.45);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:18px;padding:20px 22px;max-width:520px;width:90%;max-height:80vh;display:flex;flex-direction:column;border-top:6px solid var(--teal);box-shadow:0 20px 50px -20px rgba(0,0,0,.4)}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.modal-title{font-weight:600;font-size:14px}
+.modal-close{background:none;border:0;font-size:18px;cursor:pointer;color:var(--ink-2);padding:2px 8px;border-radius:8px}
+.modal-close:hover{background:var(--peach-l)}
+.modal-body{font-size:13px;line-height:1.7;overflow-y:auto;white-space:pre-wrap}
+@media (max-width:760px){
+  .hsub{display:none} nav{margin-left:0;width:100%;overflow-x:auto;flex-wrap:nowrap} nav button{white-space:nowrap}
+  main{padding:16px 12px 40px} .kpis{grid-template-columns:1fr 1fr;gap:10px} .kpi{padding:12px 14px} .kpi .v{font-size:17px} .tools input{min-width:0;flex:1}
+}
+</style>
+</head>
+<body>
+<div class="band"></div>
+<header><div class="hwrap">
+  <img class="logo" src="files/logo.png" alt="Lulyboo">
+  <div class="hsub"><b>Orders Dashboard</b>Level Ten Fashion · Last updated: <span id="upd"></span></div>
+  <nav id="nav">
+    <button data-p="overview" class="on">Overview</button>
+    <button data-p="orders">Orders</button>
+    <button data-p="invoices">Invoices</button>
+    <button data-p="charges">Samples &amp; Charges</button>
+    <button data-p="qc">QC</button>
+    <button data-p="tests">Lab Tests</button>
+  </nav>
+</div></header>
+
+<main>
+<section class="page on" id="p-overview">
+  <h2>Overview</h2><p class="lead">All Lulyboo orders, invoices and payments at a glance.</p>
+  <div class="kpis" id="kpis"></div>
+  <div class="card"><h3>Payment status by order</h3>
+    <div class="legend"><span style="--c:var(--teal)">Paid</span><span style="--c:var(--sun)">Open</span><span style="--c:#F1EEEA">Not invoiced yet</span></div>
+    <div class="tw"><table id="ovt"></table></div></div>
+</section>
+
+<section class="page" id="p-orders">
+  <h2>Orders</h2><p class="lead">Every purchase order with shipping dates.</p>
+  <div class="tools"><input id="oq" placeholder="Search PO, item, color…"><select id="os"><option value="">All statuses</option></select></div>
+  <div class="card"><div class="tw"><table id="ot"></table></div></div>
+</section>
+
+<section class="page" id="p-invoices">
+  <h2>Invoices</h2><p class="lead">One line per PO: main invoice (LTSI) + extra cost invoice (LFDB) together.</p>
+  <div class="tools"><div class="yr" id="iyr"></div><input id="iq" placeholder="Search PO, booking, invoice no…"><select id="is"><option value="">All statuses</option><option>Paid</option><option>Partial</option><option>Open</option><option>Pending</option></select><span class="cnt" id="icnt"></span></div>
+  <div class="card"><div class="tw"><table id="it"></table></div></div>
+</section>
+
+<section class="page" id="p-charges">
+  <h2>Samples &amp; Charges</h2><p class="lead">Samples, molds and other charges outside regular orders.</p>
+  <div class="card"><div class="tw"><table id="ct"></table></div></div>
+</section>
+
+<section class="page" id="p-qc">
+  <h2>QC Inspections</h2><p class="lead">Inspection reports per order.</p>
+  <div class="card"><div class="tw"><table id="qt"></table></div></div>
+</section>
+
+<section class="page" id="p-tests">
+  <h2>Lab Tests</h2><p class="lead">Lab test reports and results.</p>
+  <div class="card"><div class="tw"><table id="tt"></table></div></div>
+</section>
+</main>
+<footer>Level Ten Fashion Limited · Lulyboo LLC</footer>
+
+<!-- PDF Viewer -->
+<div id="pdfViewer">
+  <div class="vbar">
+    <button class="vbtn" onclick="closeViewer()">← Back</button>
+    <span id="viewerTitle"></span>
+    <button class="vbtn vx" onclick="closeViewer()" title="Close">✕</button>
+  </div>
+  <iframe id="viewerFrame" src="" allow="autoplay"></iframe>
+  <div class="vclose" onclick="closeViewer()">✕&nbsp; סגור / CLOSE</div>
+</div>
+
+<!-- Notes Modal -->
+<div class="modal-overlay" id="notesModal" onclick="if(event.target.id==='notesModal')closeNote()">
+  <div class="modal-box">
+    <div class="modal-hdr"><span class="modal-title" id="modalTitle"></span><button class="modal-close" onclick="closeNote()">✕</button></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/* ===== DATA — filled automatically by LULYBOO_update_dashboard.py (do not edit by hand) ===== */
+const UPDATED="16/10/2026 17:25";
+const ITEM_IMG={"DPS 001":"files/items/DPS-001.jpg","UPS 001":"files/items/UPS-001.jpg"};
+const ORDERS=[{"po":"310","date":"2025-10-28","person":"Joey","item":"Dino Potty Seat","itemNo":"DPS 001","color":"Deep blue-gray","qty":2832.0,"fob":3.15,"ready":"2025-12-29","etd":"2026-01-11","eta":"2026-02-11","status":"Delivered","link":"https://drive.google.com/file/d/1I-_dtE4W51eTv359QmCVk_TCbHF37kEf/view?usp=drive_link","note":""},{"po":"311","date":"2026-02-04","person":"Joey","item":"Dino Potty Seat","itemNo":"DPS 001","color":"Deep blue-gray","qty":3500.0,"fob":3.15,"ready":"2026-03-23","etd":"2026-04-05","eta":"2026-05-05","status":"Delivered","link":"https://drive.google.com/file/d/1JeBZwnCGxfNZ2snIDUl6KicVaqIwoMfD/view?usp=drive_link","note":""},{"po":"312","date":"2026-04-14","person":"Joey","item":"Dino Potty Seat","itemNo":"DPS 001","color":"Deep blue-gray","qty":3672.0,"fob":3.15,"ready":"2026-05-21","etd":"2026-08-13","eta":"2026-09-03","status":"Delivered","link":"https://drive.google.com/file/d/1o2qxfIj8xVgvpNt8ommNZWBHvFtbTy2Z/view?usp=drive_link","note":""},{"po":"313","date":"2026-04-29","person":"Joey","item":"Unicorn Potty Seat","itemNo":"UPS 001","color":"White & Light Pink","qty":3500.0,"fob":2.9,"ready":"2026-08-21","etd":"2026-09-17","eta":"2026-10-12","status":"Shipped","link":"https://drive.google.com/file/d/11LghNaffweDBwDTE3xNm4UAdcoDeLf2d/view?usp=drive_link","note":""},{"po":"314","date":"2026-04-29","person":"Joey","item":"Unicorn Potty Seat","itemNo":"UPS 001","color":"White & Light Pink","qty":3500.0,"fob":2.9,"ready":"2026-08-21","etd":"2026-09-17","eta":"2026-10-12","status":"Shipped","link":"https://drive.google.com/file/d/1_K1WKqNNdwxAyrNmqJpxcOH6s2TUAnSk/view?usp=drive_link","note":""},{"po":"310002","date":"2026-08-04","person":"Joey","item":"Dino Potty Seat","itemNo":"DPS 001","color":"Deep blue-gray","qty":3768.0,"fob":2.9,"ready":"2026-09-24","etd":"","eta":"","status":"In Production","link":"https://drive.google.com/file/d/1TkSHAzcLJuDg3y22IaZdCwzBIH78ibAT/view?usp=drive_link","note":""}];
+const INVOICES=[{"po":"310","type":"LTSI","no":"LTSI26010004","booking":"LULYBOO2601001","date":"2026-01-06","amount":8920.8,"paid":8920.8,"link":"https://docs.google.com/spreadsheets/d/1W17xbUWVljJcaUqXG4HUcO5holrWg_oT/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":"Full price invoice (no extra cost)"},{"po":"311","type":"LTSI","no":"LTSI26030056","booking":"LULYBOO2603002","date":"2026-03-30","amount":5530.0,"paid":5530.0,"link":"https://docs.google.com/spreadsheets/d/1Mh6P4wg6ZznEmhV2Bvakco3eASAZit4E/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"311","type":"EXTRA COST","no":"LFDB26040006","booking":"","date":"2026-03-14","amount":5495.0,"paid":5495.0,"link":"https://drive.google.com/file/d/1hO-BpQPH6oJkk1gtUuaiPzKinkm7ptz_/view?usp=drive_link","note":""},{"po":"312","type":"LTSI","no":"LTSI26080018","booking":"LULYBOO2608004","date":"2026-08-09","amount":5801.76,"paid":5801.76,"link":"https://docs.google.com/spreadsheets/d/1MXoivJDaSHqHatX_qU3gIkIVMNfTgNiC/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"312","type":"EXTRA COST","no":"LFDB26080011","booking":"LULYBOO2608004","date":"2026-08-09","amount":5765.04,"paid":5765.04,"link":"https://drive.google.com/file/d/1FmeVb7WLCglZ-DksShcE2N7mRO3hupB9/view?usp=drive_link","note":""},{"po":"313","type":"LTSI","no":"LTSI26090021","booking":"LULYBOO2609005","date":"2026-09-09","amount":1740.0,"paid":1740.0,"link":"https://drive.google.com/file/d/12a3V2mG9M6OAOgF7Cz51D2YB6474EmOh/view?usp=drive_link","note":""},{"po":"313","type":"EXTRA COST","no":"LFDB26090021","booking":"LULYBOO2609005","date":"2026-09-11","amount":1740.0,"paid":1740.0,"link":"https://docs.google.com/spreadsheets/d/1B1Hw5heBuw1kOSpde4YIG--cWs_Z1JCr/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"314","type":"LTSI","no":"LTSI26090027","booking":"LULYBOO2609006","date":"2026-09-08","amount":4176.0,"paid":4176.0,"link":"https://docs.google.com/spreadsheets/d/192vwnzVM5O71S_Fg2uYNtuWPFHnbFHvq/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"314","type":"EXTRA COST","no":"LFDB26090022","booking":"LULYBOO2609006","date":"2026-09-11","amount":4176.0,"paid":4176.0,"link":"https://drive.google.com/file/d/1D84BaevcIf3WDBVGBHTEH5-Agxg_EfZP/view?usp=drive_link","note":""},{"po":"313+314","type":"LTSI","no":"LTSI26090035","booking":"LULYBOO2609006","date":"2026-09-08","amount":4234.0,"paid":4234.0,"link":"https://docs.google.com/spreadsheets/d/1IEaXHOUD1Jtljcxkz4r92txuBiHatFli/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"313+314","type":"EXTRA COST","no":"LFDB26090023","booking":"LULYBOO2609007","date":"2026-09-11","amount":4234.0,"paid":3623.24,"link":"https://drive.google.com/file/d/1Km4xHuSAowqDI63_7I172dHBWLCma_CE/view?usp=drive_link","note":"need to paid 610.76$"}];
+const CHARGES=[{"no":"LFDB26050029","date":"2026-05-27","related":"313/314 Unicorn","desc":"Unicorn mold fee","amount":5000.0,"paid":0.0,"link":"https://drive.google.com/file/d/1iCPU400DNIFto-6xFOrzuGLjwZacK4wr/view?usp=drive_link","note":""},{"no":"LFDB26050030","date":"2026-05-27","related":"313/314 Unicorn","desc":"Unicorn 3D sample","amount":191.0,"paid":0.0,"link":"https://drive.google.com/file/d/1iCPU400DNIFto-6xFOrzuGLjwZacK4wr/view?usp=drive_link","note":""}];
+const QCS=[{"date":"2026-08-25","po":"314","item":"UNICORN POTTY SEAT","itemNo":"UPS 001","type":"Final Inspection","inspector":"INTERTEK","result":"Pass","link":"https://drive.google.com/file/d/1Xzh0eHOcLFu_2x-BMRINOOKGVFN8Tjw9/view?usp=drive_link","note":""},{"date":"2026-08-20","po":"313","item":"UNICORN POTTY SEAT","itemNo":"UPS 001","type":"Final Inspection","inspector":"INTERTEK","result":"Pass","link":"https://drive.google.com/file/d/1THwn34fNtWCwQwcn2K6SNdl8sE1ztBgU/view?usp=drive_link","note":""},{"date":"2026-05-25","po":"312","item":"DINO POTTY SEAT","itemNo":"DPS 001","type":"Final Inspection","inspector":"INTERTEK","result":"Pass","link":"https://drive.google.com/file/d/1gLgHVtaqudXRO90E31GbdNEWi_FkUb9M/view?usp=drive_link","note":""},{"date":"2026-03-26","po":"311","item":"DINO POTTY SEAT","itemNo":"DPS 001","type":"Final Inspection","inspector":"INTERTEK","result":"Pass","link":"https://drive.google.com/file/d/1LS_C6KLIoUg7Oo9HaY6vVr5AiZ-faUJW/view?usp=drive_link","note":""},{"date":"2025-12-29","po":"310","item":"DINO POTTY SEAT","itemNo":"DPS 001","type":"Final Inspection","inspector":"INTERTEK","result":"Pass","link":"https://drive.google.com/file/d/1ohhRywWCH71V6ZvWB4sXRmSKCmES3kyl/view?usp=drive_link","note":""}];
+const TESTS=[{"date":"2026-08-20","po":"313+314","item":"UNICORN POTTY SEAT","itemNo":"UPS 001","lab":"Eurofins","report":"EFHZ26077543-CG-01","tests":"Small Parts, Sharp Points, Sharp Edges, Tracking Label, Lead, Phthalates","result":"Pass","link":"https://drive.google.com/file/d/1kVNwhbhYq8_6FJbmiqF3ta1WE4m4yquO/view?usp=drive_link","note":"Age grade 0+"},{"date":"2025-12-15","po":"310","item":"Dino Potty Seat","itemNo":"DPS 001","lab":"Eurofins","report":"EFHZ25114773-CG-01+Rev1","tests":"Small Parts, Sharp Points, Sharp Edges, Tracking Label, Lead, Phthalates","result":"Pass","link":"https://drive.google.com/file/d/1XdWb5gIOaioNfOaRqq_CGrJH_pdT_rC0/view?usp=drive_link","note":"Age grade 0+"}];
+/* ===== END DATA ===== */
+
+const $=s=>document.querySelector(s);
+const money=v=>(v<0?"-":"")+"$"+Math.abs(+v||0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+const qty=v=>(+v||0).toLocaleString("en-US");
+const DASH='<span class="muted">—</span>';
+const d=s=>{if(!s)return DASH;const p=String(s).split("-");return p.length===3?`${p[2]}.${p[1]}.${p[0]}`:s};
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const poList=p=>String(p??"").replace(/^PO[-\s]*/i,"").split(/[+\/,&]/).map(x=>x.trim().replace(/^PO[-\s]*/i,"")).filter(Boolean);
+const orderTotal=o=>(+o.qty||0)*(+o.fob||0);
+const PILL={Paid:"p-ok",Partial:"p-sun",Open:"p-peach",Pending:"p-gray",Delivered:"p-ok",Shipped:"p-teal","In Production":"p-sun",Ready:"p-teal",Cancelled:"p-bad",Pass:"p-ok",Passed:"p-ok",Fail:"p-bad",Failed:"p-bad"};
+const pill=s=>s?`<span class="pill ${PILL[s]||"p-gray"}">${esc(s)}</span>`:DASH;
+const statusOf=(amt,paid)=>amt<=0?"Pending":(amt-paid)<0.005?"Paid":paid>0?"Partial":"Open";
+
+/* ---------- viewer (same as KS) ---------- */
+function toPreview(url){
+  let u=String(url);
+  let m=u.match(/docs\.google\.com\/(spreadsheets|document|presentation)\/d\/([\w-]+)/);
+  if(m)return `https://docs.google.com/${m[1]}/d/${m[2]}/preview`;
+  m=u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:.*&)?id=)([\w-]+)/);
+  if(m)return `https://drive.google.com/file/d/${m[1]}/preview`;
+  return u;
+}
+const VIEW=[];
+function openView(i){const [url,title]=VIEW[i];
+  $("#viewerTitle").textContent=title||"";$("#viewerFrame").src=toPreview(url);
+  $("#pdfViewer").style.display="flex";document.body.style.overflow="hidden";history.pushState({viewer:true},"","#viewer")}
+function closeViewer(){const v=$("#pdfViewer");if(v.style.display!=="flex")return;
+  v.style.display="none";$("#viewerFrame").src="";document.body.style.overflow="";if(location.hash==="#viewer")history.back()}
+window.addEventListener("popstate",()=>{const v=$("#pdfViewer");if(v.style.display==="flex"){v.style.display="none";$("#viewerFrame").src="";document.body.style.overflow=""}closeNote()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeViewer();closeNote()}});
+const vid=(url,title)=>VIEW.push([url,title])-1;
+const link=(u,label,title)=>u?`<button class="lnk" onclick="openView(${vid(u,title||label)})">📄 ${esc(label)}</button>`:DASH;
+const NOTES=[];
+function openNote(i){$("#modalTitle").textContent=NOTES[i][0];$("#modalBody").textContent=NOTES[i][1];$("#notesModal").classList.add("open")}
+function closeNote(){const m=$("#notesModal");if(m)m.classList.remove("open")}
+const noteBtn=(title,text)=>text?`<button class="nbtn" title="${esc(text)}" onclick="openNote(${NOTES.push([title,text])-1})">💬</button>`:DASH;
+
+/* ---------- one line per PO: LTSI + EXTRA COST, shared invoices (e.g. 313+314) split by remaining order value ---------- */
+function buildPOfixed(){
+  const by={};ORDERS.forEach(o=>by[o.po]={o,total:orderTotal(o),amt:0,paid:0,inv:[],dates:[],books:new Set()});
+  const add=(b,i,w)=>{b.amt+=(+i.amount||0)*w;b.paid+=(+i.paid||0)*w;b.inv.push({...i,share:w<0.9999?(+i.amount||0)*w:null});
+    if(i.date)b.dates.push(i.date);if(i.booking)b.books.add(i.booking)};
+  const single=[],shared=[];
+  INVOICES.forEach(i=>(poList(i.po).length>1?shared:single).push(i));
+  single.forEach(i=>{const p=poList(i.po)[0];if(by[p])add(by[p],i,1)});
+  const groups={};shared.forEach(i=>{const k=poList(i.po).sort().join("+");(groups[k]=groups[k]||[]).push(i)});
+  Object.values(groups).forEach(list=>{const ps=poList(list[0].po).filter(p=>by[p]);if(!ps.length)return;
+    const room=ps.map(p=>Math.max(0,by[p].total-by[p].amt));const sum=room.reduce((a,b)=>a+b,0);
+    list.forEach(i=>ps.forEach((p,k)=>add(by[p],i,sum>0?room[k]/sum:1/ps.length)))});
+  return ORDERS.map(o=>{const b=by[o.po];b.dates.sort();b.open=Math.max(0,b.amt-b.paid);b.status=statusOf(b.amt,b.paid);
+    b.year=(b.dates[0]||o.etd||o.date||"").slice(0,4);return b});
+}
+let POS=[];
+
+/* ---------- overview ---------- */
+function renderOverview(){
+  const inv=POS.reduce((a,b)=>a+b.amt,0)+CHARGES.reduce((a,c)=>a+(+c.amount||0),0);
+  const paid=POS.reduce((a,b)=>a+b.paid,0)+CHARGES.reduce((a,c)=>a+(+c.paid||0),0);
+  const open=Math.max(0,inv-paid);
+  const pend=POS.filter(b=>b.status==="Pending");const pendV=pend.reduce((a,b)=>a+b.total,0);
+  const rate=inv>0?paid/inv*100:0;
+  const nInv=INVOICES.length;
+  $("#kpis").innerHTML=`
+  <div class="kpi"><div class="l">Total invoiced</div><div class="v">${money(inv)}</div><div class="s">${nInv} invoices + ${CHARGES.length} samples/charges</div></div>
+  <div class="kpi ok"><div class="l">Total paid</div><div class="v" style="color:var(--ok)">${money(paid)}</div><div class="s">${ORDERS.length} orders · ${qty(ORDERS.reduce((a,o)=>a+(+o.qty||0),0))} pcs</div></div>
+  <div class="kpi sun"><div class="l">Outstanding</div><div class="v" style="color:#B07A00">${money(open)}</div><div class="s">Invoiced, awaiting payment</div></div>
+  <div class="kpi peach"><div class="l">Not invoiced yet</div><div class="v">${money(pendV)}</div><div class="s">${pend.length} PO${pend.length===1?"":"s"} awaiting invoice</div></div>
+  <div class="kpi ok"><div class="l">Payment rate</div><div class="v">${rate.toFixed(rate>=99.95||rate===0?0:1)}%</div><div class="rate"><i style="width:${Math.min(100,rate)}%"></i></div></div>`;
+  let h=`<thead><tr><th></th><th>PO</th><th>Item</th><th class="num">Order value</th><th class="num">Invoiced</th><th class="num">Paid</th><th class="num">Open</th><th>Progress</th><th>Payment</th><th>Order</th></tr></thead><tbody>`;
+  POS.forEach(b=>{const o=b.o,t=b.total||1,pw=Math.min(100,b.paid/t*100),ow=Math.min(100-pw,b.open/t*100);
+    h+=`<tr><td>${img(o)}</td><td>${poBtn(o)}</td><td>${esc(o.item)}</td><td class="num">${money(b.total)}</td>
+    <td class="num">${b.amt?money(b.amt):DASH}</td><td class="num">${b.paid?money(b.paid):DASH}</td><td class="num">${b.open>0.005?"<b>"+money(b.open)+"</b>":DASH}</td>
+    <td><div class="bar"><i class="paid" style="width:${pw}%"></i><i class="open" style="width:${ow}%"></i></div></td><td>${pill(b.status)}</td><td>${pill(o.status)}</td></tr>`});
+  const ch=CHARGES.reduce((a,c)=>a+Math.max(0,(+c.amount||0)-(+c.paid||0)),0);
+  if(CHARGES.length)h+=`<tr><td></td><td colspan="5"><b>Samples &amp; Charges</b> <span class="sub">(${CHARGES.length})</span></td><td class="num">${ch>0.005?"<b>"+money(ch)+"</b>":DASH}</td><td></td><td>${pill(ch>0.005?"Open":"Paid")}</td><td></td></tr>`;
+  $("#ovt").innerHTML=h+"</tbody>";
+}
+const img=o=>ITEM_IMG[o.itemNo]?`<img class="pic" src="${ITEM_IMG[o.itemNo]}" alt="" loading="lazy">`:'<div class="pic"></div>';
+const poBtn=o=>o.link?`<button class="polink" onclick="openView(${vid(o.link,"PO "+o.po)})">PO ${esc(o.po)}</button>`:`<b>PO ${esc(o.po)}</b>`;
+
+/* ---------- orders ---------- */
+function renderOrders(){
+  const q=$("#oq").value.toLowerCase(),s=$("#os").value;
+  const rows=ORDERS.filter(o=>(!s||o.status===s)&&(!q||JSON.stringify(o).toLowerCase().includes(q)));
+  let h=`<thead><tr><th>Pic</th><th>PO</th><th>Order date</th><th>Person</th><th>Item</th><th>Item no.</th><th>Color</th><th class="num">Qty</th><th class="num">FOB</th><th class="num">Total</th><th>Goods ready</th><th>ETD</th><th>ETA</th><th>Status</th><th>PO</th><th>Notes</th></tr></thead><tbody>`;
+  rows.forEach(o=>{h+=`<tr><td>${img(o)}</td><td><b>${esc(o.po)}</b></td><td>${d(o.date)}</td><td>${esc(o.person)}</td><td>${esc(o.item)}</td><td>${esc(o.itemNo)}</td><td>${esc(o.color)}</td>
+    <td class="num">${qty(o.qty)}</td><td class="num">${money(o.fob)}</td><td class="num"><b>${money(orderTotal(o))}</b></td><td>${d(o.ready)}</td><td>${d(o.etd)}</td><td>${d(o.eta)}</td>
+    <td>${pill(o.status)}</td><td>${link(o.link,"PO","PO "+o.po)}</td><td class="note">${esc(o.note)}</td></tr>`});
+  h+=`</tbody><tfoot><tr><td colspan="7">Total · ${rows.length} orders</td><td class="num">${qty(rows.reduce((a,o)=>a+(+o.qty||0),0))}</td><td></td><td class="num">${money(rows.reduce((a,o)=>a+orderTotal(o),0))}</td><td colspan="6"></td></tr></tfoot>`;
+  $("#ot").innerHTML=h;
+}
+
+/* ---------- invoices: one row per PO ---------- */
+let YEAR="All";
+function renderInvoices(){
+  const years=[...new Set(POS.map(b=>b.year).filter(Boolean))].sort();
+  $("#iyr").innerHTML=["All",...years].map(y=>`<button class="${y===YEAR?"on":""}" onclick="YEAR='${y}';renderInvoices()">${y}</button>`).join("");
+  const q=$("#iq").value.toLowerCase(),s=$("#is").value;
+  const rows=POS.filter(b=>(YEAR==="All"||b.year===YEAR)&&(!s||b.status===s)&&
+    (!q||(b.o.po+" "+[...b.books].join(" ")+" "+b.inv.map(i=>i.no).join(" ")).toLowerCase().includes(q)));
+  $("#icnt").textContent=rows.length+" / "+POS.length;
+  let h=`<thead><tr><th>PO</th><th>Invoice date</th><th>Booking no.</th><th>Invoices</th><th class="num">Amount $</th><th class="num">Paid $</th><th class="num">Open $</th><th>ETD</th><th>ETA</th><th>Status</th><th>Notes</th></tr></thead><tbody>`;
+  rows.forEach(b=>{const o=b.o,pend=b.status==="Pending";
+    const il=b.inv.map(i=>{const typ=/^LTSI/i.test(i.type)?"L":"E";
+      return `<div class="irow"><span class="t ${typ}">${typ==="L"?"LTSI":"EXTRA"}</span>${i.link?`<button onclick="openView(${vid(i.link,i.no+" · PO "+i.po)})">${esc(i.no)}</button>`:`<span>${esc(i.no)}</span>`}<span class="a">${money(i.share??i.amount)}${i.share!=null?` <span title="Shared invoice ${esc(i.po)}: ${money(i.amount)}">(of ${money(i.amount)})</span>`:""}</span></div>`}).join("");
+    const notes=b.inv.map(i=>i.note).filter(Boolean);if(pend)notes.unshift("Not invoiced yet");
+    h+=`<tr class="${pend?"pending":""}"><td>${poBtn(o)}</td><td>${b.dates.length?[...new Set(b.dates)].map(d).join("<br>"):DASH}</td><td>${b.books.size?[...b.books].map(esc).join("<br>"):DASH}</td>
+    <td>${il?`<div class="ilist">${il}</div>`:DASH}</td><td class="num"><b>${money(pend?b.total:b.amt)}</b></td><td class="num" style="color:var(--ok)">${b.paid?money(b.paid):DASH}</td>
+    <td class="num">${b.open>0.005?"<b>"+money(b.open)+"</b>":DASH}</td><td>${d(o.etd)}</td><td>${d(o.eta)}</td><td>${pill(b.status)}</td><td class="note">${esc(notes.join(" · "))}</td></tr>`});
+  const inv=rows.filter(b=>b.status!=="Pending");
+  h+=`</tbody><tfoot><tr><td colspan="4">Total invoiced · ${inv.length} POs${rows.length>inv.length?` <span class="sub">(+${rows.length-inv.length} pending, not counted)</span>`:""}</td><td class="num">${money(inv.reduce((a,b)=>a+b.amt,0))}</td><td class="num">${money(inv.reduce((a,b)=>a+b.paid,0))}</td><td class="num">${money(inv.reduce((a,b)=>a+b.open,0))}</td><td colspan="4"></td></tr></tfoot>`;
+  $("#it").innerHTML=h;
+}
+
+/* ---------- samples & charges ---------- */
+function renderCharges(){
+  if(!CHARGES.length){$("#ct").innerHTML='<tr><td class="empty"><b>No charges yet</b></td></tr>';return}
+  let h=`<thead><tr><th>Invoice no.</th><th>Date</th><th>Related to</th><th>Description</th><th class="num">Amount</th><th class="num">Paid</th><th class="num">Open</th><th>Status</th><th>File</th><th>Notes</th></tr></thead><tbody>`;
+  CHARGES.forEach(c=>{const o=Math.max(0,(+c.amount||0)-(+c.paid||0));
+    h+=`<tr><td><b>${esc(c.no)}</b></td><td>${d(c.date)}</td><td>${esc(c.related)}</td><td>${esc(c.desc)}</td><td class="num">${money(c.amount)}</td><td class="num">${c.paid?money(c.paid):DASH}</td>
+    <td class="num">${o>0.005?"<b>"+money(o)+"</b>":DASH}</td><td>${pill(statusOf(+c.amount||0,+c.paid||0))}</td><td>${link(c.link,"Invoice",c.no+" · "+c.desc)}</td><td class="note">${esc(c.note)}</td></tr>`});
+  const A=CHARGES.reduce((a,c)=>a+(+c.amount||0),0),P=CHARGES.reduce((a,c)=>a+(+c.paid||0),0);
+  $("#ct").innerHTML=h+`</tbody><tfoot><tr><td colspan="4">Total</td><td class="num">${money(A)}</td><td class="num">${money(P)}</td><td class="num">${money(Math.max(0,A-P))}</td><td colspan="3"></td></tr></tfoot>`;
+}
+
+/* ---------- QC / lab tests ---------- */
+function renderQC(){
+  if(!QCS.length){$("#qt").innerHTML='<tr><td class="empty"><b>No QC reports yet</b></td></tr>';return}
+  let h=`<thead><tr><th>Date</th><th>PO</th><th>Item</th><th>Item no.</th><th>Type</th><th>Inspector</th><th>Result</th><th>Report</th><th>Notes</th></tr></thead><tbody>`;
+  QCS.forEach(x=>{h+=`<tr><td>${d(x.date)}</td><td><b>${esc(x.po)}</b></td><td>${esc(x.item)}</td><td>${esc(x.itemNo)}</td><td>${esc(x.type)}</td><td>${esc(x.inspector)}</td><td>${pill(x.result)}</td>
+    <td>${link(x.link,"QC","QC · PO "+x.po+" · "+x.item)}</td><td>${noteBtn("📋 "+x.item+" — PO "+x.po,x.note)}</td></tr>`});
+  $("#qt").innerHTML=h+"</tbody>";
+}
+function renderTests(){
+  if(!TESTS.length){$("#tt").innerHTML='<tr><td class="empty"><b>No lab tests yet</b></td></tr>';return}
+  let h=`<thead><tr><th>Date</th><th>PO</th><th>Item</th><th>Lab</th><th>Report no.</th><th>Tests</th><th>Result</th><th>Report</th><th>Notes</th></tr></thead><tbody>`;
+  TESTS.forEach(x=>{h+=`<tr><td>${d(x.date)}</td><td><b>${esc(x.po)||DASH}</b></td><td>${esc(x.item)}<br><span class="sub">${esc(x.itemNo)}</span></td><td>${esc(x.lab)||DASH}</td><td>${esc(x.report)||DASH}</td>
+    <td class="note">${esc(x.tests)}</td><td>${pill(x.result)}</td><td>${link(x.link,"Report","Lab test · "+x.item+(x.report?" · "+x.report:""))}</td><td>${noteBtn("🧪 "+x.item+(x.report?" — "+x.report:""),x.note)}</td></tr>`});
+  $("#tt").innerHTML=h+"</tbody>";
+}
+
+/* ---------- init ---------- */
+document.addEventListener("DOMContentLoaded",()=>{
+  POS=buildPOfixed();
+  $("#upd").textContent=UPDATED||"—";
+  [...new Set(ORDERS.map(o=>o.status).filter(Boolean))].forEach(s=>$("#os").insertAdjacentHTML("beforeend",`<option>${esc(s)}</option>`));
+  ["#oq","#os"].forEach(s=>$(s).addEventListener("input",renderOrders));
+  ["#iq","#is"].forEach(s=>$(s).addEventListener("input",renderInvoices));
+  document.querySelectorAll("#nav button").forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("on",x===b));
+    document.querySelectorAll(".page").forEach(p=>p.classList.toggle("on",p.id==="p-"+b.dataset.p));
+    window.scrollTo(0,0)}));
+  renderOverview();renderOrders();renderInvoices();renderCharges();renderQC();renderTests();
+});
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+</body>
+</html>
