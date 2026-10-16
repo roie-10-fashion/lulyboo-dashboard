@@ -7,53 +7,42 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="theme-color" content="#3B3F5C">
+<meta name="theme-color" content="#80D0D0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --mint:#9BE7E1; --teal:#7FD9D3; --teal-d:#2E9C97; --teal-xd:#1F6B68; --night:#3B3F5C; --night-2:#5A5F7D; --glow:#FFC46B; --lav:#EDE7F3;
+  --mint:#7FE2D8; --teal:#80D0D0; --teal-d:#2E9A9A; --teal-xd:#1F6F6F;
   --sun:#F2B32A; --sun-l:#FFF3D6; --peach:#F4B9A9; --peach-l:#FDEDE8;
-  --ink:#2F3437; --ink-2:#6B7275; --line:#E3E4E8; --bg:#F8F7F3; --card:#FFFFFF;
+  --ink:#373330; --ink-2:#6B6560; --line:#ECE7E1; --bg:#FFFCF8; --card:#FFFFFF;
   --ok:#2E9A6B; --ok-l:#E3F5EC; --bad:#D9534F; --bad-l:#FCE9E8;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
 body{font-family:Poppins,system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px}
-header{position:relative}
-.hbar{position:relative;overflow:hidden;color:#fff;
-  background:radial-gradient(ellipse 420px 180px at 50% 55%,rgba(255,196,107,.38),rgba(255,196,107,0) 70%),
-             radial-gradient(ellipse 600px 260px at 88% 120%,rgba(201,168,214,.35),rgba(201,168,214,0) 70%),
-             linear-gradient(135deg,#34385A 0%,#4B4F70 55%,#5E6079 100%);
-  border-bottom:3px solid var(--teal)}
-.hwrap{max-width:1360px;margin:0 auto;padding:20px 28px 16px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px}
-.logo-cap{background:#FBF9F4;border-radius:999px;padding:12px 32px;box-shadow:0 0 0 1.5px var(--mint),0 0 0 6px #474B6B,0 0 0 7px var(--mint),0 0 44px 8px rgba(255,196,107,.35);text-align:center}
-.logo{height:44px;display:block;margin:0 auto}
-.hsub{text-align:center;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#D9DCEB;margin-top:12px}
-.hsub b{color:#fff;font-weight:600}
-.clock{display:flex;align-items:center;gap:12px}
-.clock.r{justify-content:flex-end;text-align:right}
-.clock .c{font-size:10px;letter-spacing:.25em;text-transform:uppercase;font-weight:600;color:var(--mint)}
-.clock .t{font-size:28px;font-weight:300;letter-spacing:1px;font-variant-numeric:tabular-nums;line-height:1.2}
-.clock .d{font-size:11px;color:#D9DCEB}
-.clock svg{width:46px;height:46px;flex-shrink:0}
-nav{position:sticky;top:0;z-index:20;background:rgba(248,247,243,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);display:flex;justify-content:center;gap:4px;padding:0 12px;flex-wrap:wrap}
-nav button{font:inherit;font-size:11.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;border:0;background:none;color:var(--ink-2);padding:15px 16px 13px;cursor:pointer;border-bottom:2px solid transparent}
-nav button:hover{color:var(--ink)}
-nav button.on{color:var(--teal-d);font-weight:600;border-bottom-color:var(--teal)}
+.band{height:8px;background:var(--mint)}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.hwrap{max-width:1360px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.logo{height:40px;display:block}
+.hsub{font-size:12px;color:var(--ink-2);line-height:1.35;border-left:2px solid var(--line);padding-left:16px}
+.hsub b{color:var(--ink);font-weight:600;display:block;font-size:13px}
+nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+nav button{font:inherit;font-size:13px;font-weight:500;border:0;background:none;color:var(--ink-2);padding:8px 14px;border-radius:999px;cursor:pointer}
+nav button:hover{background:var(--peach-l);color:var(--ink)}
+nav button.on{background:var(--teal);color:#fff}
 main{max-width:1360px;margin:0 auto;padding:24px 20px 60px}
 .page{display:none}.page.on{display:block}
-h2{font-size:20px;font-weight:600;margin:0 0 4px;color:var(--night)}
+h2{font-size:20px;font-weight:600;margin:0 0 4px}
 .lead{color:var(--ink-2);margin:0 0 20px;font-size:13px}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px}
-.kpi{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px 18px 16px 22px;position:relative;overflow:hidden;box-shadow:0 6px 18px -14px rgba(59,63,92,.45)}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;position:relative;overflow:hidden}
 .kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--teal)}
-.kpi.sun::before{background:var(--glow)}.kpi.peach::before{background:#C9A8D6}.kpi.ok::before{background:var(--teal)}
+.kpi.sun::before{background:var(--sun)}.kpi.peach::before{background:var(--peach)}.kpi.ok::before{background:var(--ok)}
 .kpi .l{font-size:11.5px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.04em}
-.kpi .v{font-size:24px;font-weight:500;color:#24494A;margin-top:4px;font-variant-numeric:tabular-nums}
+.kpi .v{font-size:22px;font-weight:600;margin-top:4px;font-variant-numeric:tabular-nums}
 .kpi .s{font-size:11.5px;color:var(--ink-2);margin-top:2px}
 .kpi .rate{height:6px;background:#F1EEEA;border-radius:9px;margin-top:8px;overflow:hidden}.kpi .rate i{display:block;height:100%;background:var(--ok)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px -20px rgba(59,63,92,.5);padding:18px;margin-bottom:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:20px}
 .card h3{margin:0 0 14px;font-size:15px;font-weight:600}
 .tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
 .tools input,.tools select{font:inherit;font-size:13px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
@@ -95,15 +84,8 @@ tfoot td{font-weight:600;border-top:2px solid var(--line);border-bottom:0;backgr
 .note{font-size:11.5px;color:var(--ink-2);white-space:normal;min-width:160px;max-width:280px}
 .sub{font-size:11px;color:var(--ink-2)}
 .pending td{color:var(--ink-2)}
-.porow{cursor:pointer}.porow.pending{cursor:default}
-.porow.isopen td{background:#F2FAF9}
-.chev{color:var(--teal-d);font-size:12px}
-.invsub>td{padding:0;background:#FBFCFC}
-.inner{padding:8px 18px 14px 46px}
-.inner table td{border-bottom:1px dashed var(--line);padding:8px 10px;font-size:12.5px}
-.tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:5px}.tag.L{background:#E2F6F5;color:var(--teal-xd)}.tag.E{background:#EDE7F3;color:#6A4E86}
 .nbtn{background:none;border:0;cursor:pointer;font-size:16px;padding:2px 4px}
-.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}.two .card{margin-bottom:20px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}.two .card{margin-bottom:20px}
 .info{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;font-size:13px;margin-bottom:14px}
 .info dt{color:var(--ink-2)}.info dd{margin:0;font-weight:500;white-space:pre-wrap}
 .contacts{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
@@ -113,7 +95,7 @@ tfoot td{font-weight:600;border-top:2px solid var(--line);border-bottom:0;backgr
 .up{color:var(--ok);font-weight:600}.down{color:var(--bad);font-weight:600}
 footer{text-align:center;color:var(--ink-2);font-size:11.5px;padding:20px}
 /* PDF viewer + notes modal (same behaviour as KS) */
-#pdfViewer{display:none;position:fixed;inset:0;z-index:9999;flex-direction:column;background:var(--night)}
+#pdfViewer{display:none;position:fixed;inset:0;z-index:9999;flex-direction:column;background:var(--teal-xd)}
 #pdfViewer .vbar{display:flex;align-items:center;gap:10px;padding:max(14px,env(safe-area-inset-top,14px)) 14px 10px;flex-shrink:0}
 #pdfViewer .vbtn{background:rgba(255,255,255,.22);border:0;color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer;padding:9px 18px;border-radius:10px;white-space:nowrap}
 #pdfViewer .vbtn:hover{background:rgba(255,255,255,.35)}
@@ -131,30 +113,26 @@ footer{text-align:center;color:var(--ink-2);font-size:11.5px;padding:20px}
 .modal-close:hover{background:var(--peach-l)}
 .modal-body{font-size:13px;line-height:1.7;overflow-y:auto;white-space:pre-wrap}
 @media (max-width:760px){
-  .two{grid-template-columns:minmax(0,1fr);gap:0} .info{grid-template-columns:minmax(0,40%) minmax(0,1fr)} .info dd{overflow-wrap:anywhere}
-  .hwrap{grid-template-columns:1fr 1fr;padding:16px 14px 12px;gap:12px} .hwrap>div:nth-child(2){grid-column:1/3;grid-row:1} .logo-cap{padding:10px 24px;display:inline-block} .hwrap>div:nth-child(2){text-align:center}
-  .clock .t{font-size:20px} .clock svg{width:34px;height:34px} .clock .c{font-size:9px;letter-spacing:.15em}
-  nav{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap} nav button{white-space:nowrap;padding:13px 12px 11px}
+  .two{grid-template-columns:1fr;gap:0}
+  .hsub{display:none} nav{margin-left:0;width:100%;overflow-x:auto;flex-wrap:nowrap} nav button{white-space:nowrap}
   main{padding:16px 12px 40px} .kpis{grid-template-columns:1fr 1fr;gap:10px} .kpi{padding:12px 14px} .kpi .v{font-size:17px} .tools input{min-width:0;flex:1}
 }
 </style>
 </head>
 <body>
-<header>
- <div class="hbar"><div class="hwrap">
-  <div class="clock"><svg viewBox="0 0 46 46"><circle cx="23" cy="23" r="21" fill="rgba(255,255,255,.06)" stroke="var(--mint)" stroke-width="1.4"/><g stroke="#fff" stroke-width="1" opacity=".5"><line x1="23" y1="4" x2="23" y2="7"/><line x1="23" y1="39" x2="23" y2="42"/><line x1="4" y1="23" x2="7" y2="23"/><line x1="39" y1="23" x2="42" y2="23"/></g><line id="h1" x1="23" y1="23" x2="23" y2="12" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><line id="m1" x1="23" y1="23" x2="23" y2="7" stroke="var(--glow)" stroke-width="1.4" stroke-linecap="round"/><circle cx="23" cy="23" r="1.8" fill="var(--glow)"/></svg><div><div class="c">Yiwu · China</div><div class="t" id="t1">--:--</div><div class="d" id="d1"></div></div></div>
-  <div><div class="logo-cap"><img class="logo" src="files/logo.png" alt="Lulyboo"></div><div class="hsub"><b>Orders Dashboard</b> · Updated <span id="upd"></span></div></div>
-  <div class="clock r"><div><div class="c">Irvine · California</div><div class="t" id="t2">--:--</div><div class="d" id="d2"></div></div><svg viewBox="0 0 46 46"><circle cx="23" cy="23" r="21" fill="rgba(255,255,255,.06)" stroke="var(--mint)" stroke-width="1.4"/><g stroke="#fff" stroke-width="1" opacity=".5"><line x1="23" y1="4" x2="23" y2="7"/><line x1="23" y1="39" x2="23" y2="42"/><line x1="4" y1="23" x2="7" y2="23"/><line x1="39" y1="23" x2="42" y2="23"/></g><line id="h2" x1="23" y1="23" x2="23" y2="12" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><line id="m2" x1="23" y1="23" x2="23" y2="7" stroke="var(--glow)" stroke-width="1.4" stroke-linecap="round"/><circle cx="23" cy="23" r="1.8" fill="var(--glow)"/></svg></div>
- </div></div>
-</header>
-<nav id="nav">
-  <button data-p="overview" class="on">Overview</button>
-  <button data-p="orders">Orders</button>
-  <button data-p="invoices">Invoices</button>
-  <button data-p="charges">Samples &amp; Charges</button>
-  <button data-p="qc">QC</button>
-  <button data-p="tests">Lab Tests</button>
-</nav>
+<div class="band"></div>
+<header><div class="hwrap">
+  <img class="logo" src="files/logo.png" alt="Lulyboo">
+  <div class="hsub"><b>Orders Dashboard</b>Level Ten Fashion · Last updated: <span id="upd"></span></div>
+  <nav id="nav">
+    <button data-p="overview" class="on">Overview</button>
+    <button data-p="orders">Orders</button>
+    <button data-p="invoices">Invoices</button>
+    <button data-p="charges">Samples &amp; Charges</button>
+    <button data-p="qc">QC</button>
+    <button data-p="tests">Lab Tests</button>
+  </nav>
+</div></header>
 
 <main>
 <section class="page on" id="p-overview">
@@ -174,7 +152,7 @@ footer{text-align:center;color:var(--ink-2);font-size:11.5px;padding:20px}
 </section>
 
 <section class="page" id="p-invoices">
-  <h2>Invoices</h2><p class="lead">One line per PO. Click a line to see its invoices (LTSI + extra cost).</p>
+  <h2>Invoices</h2><p class="lead">One line per PO: main invoice (LTSI) + extra cost invoice (LFDB) together.</p>
   <div class="tools"><div class="yr" id="iyr"></div><input id="iq" placeholder="Search PO, booking, invoice no…"><select id="is"><option value="">All statuses</option><option>Paid</option><option>Partial</option><option>Open</option><option>Pending</option></select><span class="cnt" id="icnt"></span></div>
   <div class="card"><div class="tw"><table id="it"></table></div></div>
 </section>
@@ -217,7 +195,7 @@ footer{text-align:center;color:var(--ink-2);font-size:11.5px;padding:20px}
 
 <script>
 /* ===== DATA — filled automatically by LULYBOO_update_dashboard.py (do not edit by hand) ===== */
-const UPDATED="17/10/2026 01:12";
+const UPDATED="17/10/2026 01:19";
 const ITEM_IMG={"DPS 001":"files/items/DPS-001.jpg","UPS 001":"files/items/UPS-001.jpg"};
 const ORDERS=[{"po":"310","date":"2025-10-28","person":"Joey","item":"Dino Potty Seat","itemNo":"DPS 001","color":"Deep blue-gray","qty":2832.0,"fob":3.15,"ready":"2025-12-29","etd":"2026-01-11","eta":"2026-02-11","status":"Delivered","link":"https://drive.google.com/file/d/1I-_dtE4W51eTv359QmCVk_TCbHF37kEf/view?usp=drive_link","note":""},{"po":"311","date":"2026-02-04","person":"Joey","item":"Dino Potty Seat","itemNo":"DPS 001","color":"Deep blue-gray","qty":3500.0,"fob":3.15,"ready":"2026-03-23","etd":"2026-04-05","eta":"2026-05-05","status":"Delivered","link":"https://drive.google.com/file/d/1JeBZwnCGxfNZ2snIDUl6KicVaqIwoMfD/view?usp=drive_link","note":""},{"po":"312","date":"2026-04-14","person":"Joey","item":"Dino Potty Seat","itemNo":"DPS 001","color":"Deep blue-gray","qty":3672.0,"fob":3.15,"ready":"2026-05-21","etd":"2026-08-13","eta":"2026-09-03","status":"Delivered","link":"https://drive.google.com/file/d/1o2qxfIj8xVgvpNt8ommNZWBHvFtbTy2Z/view?usp=drive_link","note":""},{"po":"313","date":"2026-04-29","person":"Joey","item":"Unicorn Potty Seat","itemNo":"UPS 001","color":"White & Light Pink","qty":3500.0,"fob":2.9,"ready":"2026-08-21","etd":"2026-09-17","eta":"2026-10-12","status":"Shipped","link":"https://drive.google.com/file/d/11LghNaffweDBwDTE3xNm4UAdcoDeLf2d/view?usp=drive_link","note":""},{"po":"314","date":"2026-04-29","person":"Joey","item":"Unicorn Potty Seat","itemNo":"UPS 001","color":"White & Light Pink","qty":3500.0,"fob":2.9,"ready":"2026-08-21","etd":"2026-09-17","eta":"2026-10-12","status":"Shipped","link":"https://drive.google.com/file/d/1_K1WKqNNdwxAyrNmqJpxcOH6s2TUAnSk/view?usp=drive_link","note":""},{"po":"310002","date":"2026-08-04","person":"Joey","item":"Dino Potty Seat","itemNo":"DPS 001","color":"Deep blue-gray","qty":3768.0,"fob":2.9,"ready":"2026-09-24","etd":"","eta":"","status":"In Production","link":"https://drive.google.com/file/d/1TkSHAzcLJuDg3y22IaZdCwzBIH78ibAT/view?usp=drive_link","note":""}];
 const INVOICES=[{"po":"310","type":"LTSI","no":"LTSI26010004","booking":"LULYBOO2601001","date":"2026-01-06","amount":4474.56,"paid":4474.56,"link":"https://docs.google.com/spreadsheets/d/1W17xbUWVljJcaUqXG4HUcO5holrWg_oT/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"310","type":"EXTRA COST","no":"LFDB26020003","booking":"","date":"2026-02-03","amount":4446.24,"paid":4446.24,"link":"https://drive.google.com/file/d/10b1nIerRWesRopVjQwd9IURwNEQqwAVl/view?usp=drive_link","note":"Part of LFDB26020003 - total 4,885.63"},{"po":"311","type":"LTSI","no":"LTSI26030056","booking":"LULYBOO2603002","date":"2026-03-30","amount":5530.0,"paid":5530.0,"link":"https://docs.google.com/spreadsheets/d/1Mh6P4wg6ZznEmhV2Bvakco3eASAZit4E/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"311","type":"EXTRA COST","no":"LFDB26040006","booking":"","date":"2026-03-14","amount":5495.0,"paid":5495.0,"link":"https://drive.google.com/file/d/1hO-BpQPH6oJkk1gtUuaiPzKinkm7ptz_/view?usp=drive_link","note":""},{"po":"312","type":"LTSI","no":"LTSI26080018","booking":"LULYBOO2608004","date":"2026-08-09","amount":5801.76,"paid":5801.76,"link":"https://docs.google.com/spreadsheets/d/1MXoivJDaSHqHatX_qU3gIkIVMNfTgNiC/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"312","type":"EXTRA COST","no":"LFDB26080011","booking":"LULYBOO2608004","date":"2026-08-09","amount":5765.04,"paid":5765.04,"link":"https://drive.google.com/file/d/1FmeVb7WLCglZ-DksShcE2N7mRO3hupB9/view?usp=drive_link","note":""},{"po":"313","type":"LTSI","no":"LTSI26090021","booking":"LULYBOO2609005","date":"2026-09-09","amount":1740.0,"paid":1740.0,"link":"https://drive.google.com/file/d/12a3V2mG9M6OAOgF7Cz51D2YB6474EmOh/view?usp=drive_link","note":""},{"po":"313","type":"EXTRA COST","no":"LFDB26090021","booking":"LULYBOO2609005","date":"2026-09-11","amount":1740.0,"paid":1740.0,"link":"https://docs.google.com/spreadsheets/d/1B1Hw5heBuw1kOSpde4YIG--cWs_Z1JCr/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"314","type":"LTSI","no":"LTSI26090027","booking":"LULYBOO2609006","date":"2026-09-08","amount":4176.0,"paid":4176.0,"link":"https://docs.google.com/spreadsheets/d/192vwnzVM5O71S_Fg2uYNtuWPFHnbFHvq/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"314","type":"EXTRA COST","no":"LFDB26090022","booking":"LULYBOO2609006","date":"2026-09-11","amount":4176.0,"paid":4176.0,"link":"https://drive.google.com/file/d/1D84BaevcIf3WDBVGBHTEH5-Agxg_EfZP/view?usp=drive_link","note":""},{"po":"313+314","type":"LTSI","no":"LTSI26090035","booking":"LULYBOO2609006","date":"2026-09-08","amount":4234.0,"paid":4234.0,"link":"https://docs.google.com/spreadsheets/d/1IEaXHOUD1Jtljcxkz4r92txuBiHatFli/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"313+314","type":"EXTRA COST","no":"LFDB26090023","booking":"LULYBOO2609007","date":"2026-09-11","amount":4234.0,"paid":3623.24,"link":"https://drive.google.com/file/d/1Km4xHuSAowqDI63_7I172dHBWLCma_CE/view?usp=drive_link","note":"need to paid 610.76$"}];
@@ -332,19 +310,16 @@ const poBtn=o=>o.link?`<button class="polink" onclick="openView(${vid(o.link,"PO
 function renderOrders(){
   const q=$("#oq").value.toLowerCase(),s=$("#os").value;
   const rows=ORDERS.filter(o=>(!s||o.status===s)&&(!q||JSON.stringify(o).toLowerCase().includes(q)));
-  const hasNotes=ORDERS.some(o=>o.note);
-  let h=`<thead><tr><th>Pic</th><th>PO</th><th>PO file</th><th>Order date</th><th>Person</th><th>Item</th><th>Color</th><th class="num">Qty</th><th class="num">FOB</th><th class="num">Total</th><th>Goods ready</th><th>ETD</th><th>ETA</th><th>Status</th>${hasNotes?"<th>Notes</th>":""}</tr></thead><tbody>`;
-  rows.forEach(o=>{h+=`<tr><td>${img(o)}</td><td><b>${esc(o.po)}</b></td><td>${link(o.link,"PO","PO "+o.po)}</td><td>${d(o.date)}</td><td>${esc(o.person)}</td>
-    <td>${esc(o.item)}<br><span class="sub">${esc(o.itemNo)}</span></td><td>${esc(o.color)}</td>
+  let h=`<thead><tr><th>Pic</th><th>PO</th><th>Order date</th><th>Person</th><th>Item</th><th>Item no.</th><th>Color</th><th class="num">Qty</th><th class="num">FOB</th><th class="num">Total</th><th>Goods ready</th><th>ETD</th><th>ETA</th><th>Status</th><th>PO</th><th>Notes</th></tr></thead><tbody>`;
+  rows.forEach(o=>{h+=`<tr><td>${img(o)}</td><td><b>${esc(o.po)}</b></td><td>${d(o.date)}</td><td>${esc(o.person)}</td><td>${esc(o.item)}</td><td>${esc(o.itemNo)}</td><td>${esc(o.color)}</td>
     <td class="num">${qty(o.qty)}</td><td class="num">${money(o.fob)}</td><td class="num"><b>${money(orderTotal(o))}</b></td><td>${d(o.ready)}</td><td>${d(o.etd)}</td><td>${d(o.eta)}</td>
-    <td>${pill(o.status)}</td>${hasNotes?`<td class="note">${esc(o.note)}</td>`:""}</tr>`});
-  h+=`</tbody><tfoot><tr><td colspan="7">Total · ${rows.length} orders</td><td class="num">${qty(rows.reduce((a,o)=>a+(+o.qty||0),0))}</td><td></td><td class="num">${money(rows.reduce((a,o)=>a+orderTotal(o),0))}</td><td colspan="${hasNotes?5:4}"></td></tr></tfoot>`;
+    <td>${pill(o.status)}</td><td>${link(o.link,"PO","PO "+o.po)}</td><td class="note">${esc(o.note)}</td></tr>`});
+  h+=`</tbody><tfoot><tr><td colspan="7">Total · ${rows.length} orders</td><td class="num">${qty(rows.reduce((a,o)=>a+(+o.qty||0),0))}</td><td></td><td class="num">${money(rows.reduce((a,o)=>a+orderTotal(o),0))}</td><td colspan="6"></td></tr></tfoot>`;
   $("#ot").innerHTML=h;
 }
 
-/* ---------- invoices: one clean row per PO, click to open its invoices ---------- */
-let YEAR="All";const OPEN=new Set();
-function toggleInv(po){OPEN.has(po)?OPEN.delete(po):OPEN.add(po);renderInvoices()}
+/* ---------- invoices: one row per PO ---------- */
+let YEAR="All";
 function renderInvoices(){
   const years=[...new Set(POS.map(b=>b.year).filter(Boolean))].sort();
   $("#iyr").innerHTML=["All",...years].map(y=>`<button class="${y===YEAR?"on":""}" onclick="YEAR='${y}';renderInvoices()">${y}</button>`).join("");
@@ -352,27 +327,16 @@ function renderInvoices(){
   const rows=POS.filter(b=>(YEAR==="All"||b.year===YEAR)&&(!s||b.status===s)&&
     (!q||(b.o.po+" "+[...b.books].join(" ")+" "+b.inv.map(i=>i.no).join(" ")).toLowerCase().includes(q)));
   $("#icnt").textContent=rows.length+" / "+POS.length;
-  let h=`<thead><tr><th style="width:28px"></th><th>PO</th><th>Invoice date</th><th class="num">Amount $</th><th class="num">Paid $</th><th class="num">Open $</th><th>Progress</th><th>ETD</th><th>ETA</th><th>Status</th></tr></thead><tbody>`;
-  rows.forEach(b=>{const o=b.o,pend=b.status==="Pending",isOpen=OPEN.has(o.po),t=(pend?b.total:b.amt)||1;
-    const pw=Math.min(100,b.paid/t*100),ow=Math.min(100-pw,b.open/t*100);
-    h+=`<tr class="porow ${pend?"pending":""} ${isOpen?"isopen":""}" ${pend?"":`onclick="toggleInv('${esc(o.po)}')"`}>
-      <td>${pend?"":`<span class="chev">${isOpen?"▾":"▸"}</span>`}</td><td><b>PO ${esc(o.po)}</b> <span class="sub">${b.inv.length?b.inv.length+" invoices":""}</span></td>
-      <td>${b.dates.length?d(b.dates[0]):DASH}</td><td class="num"><b>${money(pend?b.total:b.amt)}</b></td>
-      <td class="num" style="color:var(--ok)">${b.paid?money(b.paid):DASH}</td><td class="num">${b.open>0.005?"<b>"+money(b.open)+"</b>":DASH}</td>
-      <td><div class="bar"><i class="paid" style="width:${pw}%"></i><i class="open" style="width:${ow}%"></i></div></td>
-      <td>${d(o.etd)}</td><td>${d(o.eta)}</td><td>${pill(b.status)}${pend?' <span class="sub">Not invoiced yet</span>':""}</td></tr>`;
-    if(isOpen&&!pend){
-      const notes=[...new Set(b.inv.map(i=>i.note).filter(Boolean))];
-      h+=`<tr class="invsub"><td colspan="10"><div class="inner"><table>${b.inv.map(i=>{const L=/^LTSI/i.test(i.type);
-        const others=poList(i.po).filter(p=>p!==o.po);
-        return `<tr><td style="width:70px"><span class="tag ${L?"L":"E"}">${L?"LTSI":"EXTRA"}</span></td>
-          <td><b>${esc(i.no)}</b>${others.length?` <span class="sub">shared with ${others.map(esc).join(", ")}</span>`:""}</td>
-          <td>${d(i.date)}</td><td>${esc(i.booking)||DASH}</td>
-          <td class="num">${money(i.share??i.amount)}${i.share!=null?` <span class="sub">of ${money(i.amount)}</span>`:""}</td>
-          <td>${pill(statusOf(+i.amount||0,+i.paid||0))}</td><td>${link(i.link,"Invoice",i.no+" · PO "+i.po)}</td></tr>`}).join("")}</table>
-        ${notes.length?`<div class="sub" style="margin-top:8px">📝 ${notes.map(esc).join(" · ")}</div>`:""}</div></td></tr>`}});
+  let h=`<thead><tr><th>PO</th><th>Invoice date</th><th>Booking no.</th><th>Invoices</th><th class="num">Amount $</th><th class="num">Paid $</th><th class="num">Open $</th><th>ETD</th><th>ETA</th><th>Status</th><th>Notes</th></tr></thead><tbody>`;
+  rows.forEach(b=>{const o=b.o,pend=b.status==="Pending";
+    const il=b.inv.map(i=>{const typ=/^LTSI/i.test(i.type)?"L":"E";
+      return `<div class="irow"><span class="t ${typ}">${typ==="L"?"LTSI":"EXTRA"}</span>${i.link?`<button onclick="openView(${vid(i.link,i.no+" · PO "+i.po)})">${esc(i.no)}</button>`:`<span>${esc(i.no)}</span>`}<span class="a">${money(i.share??i.amount)}${i.share!=null?` <span title="Shared invoice ${esc(i.po)}: ${money(i.amount)}">(of ${money(i.amount)})</span>`:""}</span></div>`}).join("");
+    const notes=b.inv.map(i=>i.note).filter(Boolean);if(pend)notes.unshift("Not invoiced yet");
+    h+=`<tr class="${pend?"pending":""}"><td>${poBtn(o)}</td><td>${b.dates.length?[...new Set(b.dates)].map(d).join("<br>"):DASH}</td><td>${b.books.size?[...b.books].map(esc).join("<br>"):DASH}</td>
+    <td>${il?`<div class="ilist">${il}</div>`:DASH}</td><td class="num"><b>${money(pend?b.total:b.amt)}</b></td><td class="num" style="color:var(--ok)">${b.paid?money(b.paid):DASH}</td>
+    <td class="num">${b.open>0.005?"<b>"+money(b.open)+"</b>":DASH}</td><td>${d(o.etd)}</td><td>${d(o.eta)}</td><td>${pill(b.status)}</td><td class="note">${esc(notes.join(" · "))}</td></tr>`});
   const inv=rows.filter(b=>b.status!=="Pending");
-  h+=`</tbody><tfoot><tr><td></td><td colspan="2">Total invoiced · ${inv.length} POs${rows.length>inv.length?` <span class="sub">(+${rows.length-inv.length} pending)</span>`:""}</td><td class="num">${money(inv.reduce((a,b)=>a+b.amt,0))}</td><td class="num">${money(inv.reduce((a,b)=>a+b.paid,0))}</td><td class="num">${money(inv.reduce((a,b)=>a+b.open,0))}</td><td colspan="4"></td></tr></tfoot>`;
+  h+=`</tbody><tfoot><tr><td colspan="4">Total invoiced · ${inv.length} POs${rows.length>inv.length?` <span class="sub">(+${rows.length-inv.length} pending, not counted)</span>`:""}</td><td class="num">${money(inv.reduce((a,b)=>a+b.amt,0))}</td><td class="num">${money(inv.reduce((a,b)=>a+b.paid,0))}</td><td class="num">${money(inv.reduce((a,b)=>a+b.open,0))}</td><td colspan="4"></td></tr></tfoot>`;
   $("#it").innerHTML=h;
 }
 
@@ -403,16 +367,9 @@ function renderTests(){
   $("#tt").innerHTML=h+"</tbody>";
 }
 
-/* ---------- clocks: Yiwu (China) + Irvine (California) ---------- */
-function tick(){const now=new Date();
-  [["Asia/Shanghai",1],["America/Los_Angeles",2]].forEach(([tz,i])=>{
-    const p=Object.fromEntries(new Intl.DateTimeFormat("en-GB",{timeZone:tz,hour:"2-digit",minute:"2-digit",hour12:false,weekday:"short",day:"numeric",month:"short"}).formatToParts(now).map(x=>[x.type,x.value]));
-    const h=+p.hour%24,m=+p.minute;
-    $("#t"+i).textContent=`${p.hour}:${p.minute}`;$("#d"+i).textContent=`${p.weekday} ${p.day} ${p.month}`;
-    $("#h"+i).setAttribute("transform",`rotate(${(h%12)*30+m*0.5} 23 23)`);$("#m"+i).setAttribute("transform",`rotate(${m*6} 23 23)`)})}
 /* ---------- init ---------- */
 document.addEventListener("DOMContentLoaded",()=>{
-  POS=buildPOfixed();tick();setInterval(tick,20000);
+  POS=buildPOfixed();
   $("#upd").textContent=UPDATED||"—";
   [...new Set(ORDERS.map(o=>o.status).filter(Boolean))].forEach(s=>$("#os").insertAdjacentHTML("beforeend",`<option>${esc(s)}</option>`));
   ["#oq","#os"].forEach(s=>$(s).addEventListener("input",renderOrders));
