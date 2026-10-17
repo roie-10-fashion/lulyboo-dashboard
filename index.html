@@ -103,6 +103,8 @@ tfoot td{font-weight:600;border-top:2px solid var(--line);border-bottom:0;backgr
 .inner table td{border-bottom:1px dashed var(--line);padding:8px 10px;font-size:12.5px}
 .inner .ih td{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-2);border-bottom:1px solid var(--line);padding-bottom:6px}
 .shr{font-size:11px;color:var(--ink-2);margin-top:3px;white-space:normal}
+.invno{font:inherit;font-size:12.5px;font-weight:600;color:var(--ink);background:none;border:0;padding:0;cursor:pointer;border-bottom:1px dashed var(--teal-d)}
+.invno:hover{color:var(--teal-d)}
 .tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:5px}.tag.L{background:#E2F6F5;color:var(--teal-xd)}.tag.E{background:#EDE7F3;color:#6A4E86}
 .nbtn{background:none;border:0;cursor:pointer;font-size:16px;padding:2px 4px}
 .two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}.two .card{margin-bottom:20px}
@@ -139,6 +141,37 @@ footer{text-align:center;color:var(--ink-2);font-size:11.5px;padding:20px}
   nav{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap} nav button{white-space:nowrap;padding:13px 12px 11px}
   main{padding:16px 12px 40px} .kpis{grid-template-columns:1fr 1fr;gap:10px} .kpi{padding:12px 14px} .kpi .v{font-size:17px} .tools input{min-width:0;flex:1}
 }
+
+/* ===== phone / app layout: cards instead of tables ===== */
+.mlist{display:none}
+#ptr{display:none;position:fixed;left:0;right:0;top:0;z-index:50;justify-content:center;align-items:center;gap:8px;font-size:12px;color:var(--teal-d);
+  height:0;overflow:hidden;background:var(--bg);transition:height .15s}
+#ptr i{width:18px;height:18px;border:2px solid var(--teal);border-top-color:transparent;border-radius:50%}
+#ptr.spin i{animation:sp .7s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+.mc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;box-shadow:0 6px 16px -14px rgba(59,63,92,.6)}
+.mc .r{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mc .po{font-weight:600;font-size:14px}
+.mc .big{font-size:20px;font-weight:500;margin:6px 0 2px;color:#24494A}
+.mc .g{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px 6px;margin-top:8px}
+.mc .g div{font-size:10px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.04em}.mc .g b{display:block;font-size:12.5px;color:var(--ink);font-weight:500;text-transform:none;letter-spacing:0}
+.mc .bar{min-width:0;margin:8px 0}
+.mc .il{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:5px 0;font-size:12px;border-top:1px dashed var(--line)}
+.mc .il:first-child{border-top:0}
+.mc .inv{border-top:1px dashed var(--line);margin-top:8px;padding-top:6px}
+.mc .oc{display:flex;gap:10px}.mc .pic{width:48px;height:48px}
+.mc .open{color:#B07A00;font-weight:600}
+.mc .note{max-width:none;min-width:0;margin-top:6px}
+@media (max-width:760px){
+  .dt{display:none}.mlist{display:block}
+  .card.tbl{background:none;border:0;box-shadow:none;padding:0}
+  .hwrap{display:flex!important;justify-content:space-between;align-items:center;padding:10px 12px!important;gap:8px}
+  .hwrap>div:nth-child(2){order:0}
+  .logo-cap{padding:5px 14px!important;box-shadow:0 0 0 1px var(--mint),0 0 18px 3px rgba(255,196,107,.35)!important}
+  .logo{height:24px!important}
+  .hsub,.clock svg,.clock .d{display:none!important}
+  .clock .t{font-size:16px!important}.clock .c{font-size:8px!important;letter-spacing:.12em!important}
+  #ptr{display:flex}
+}
 </style>
 </head>
 <body>
@@ -158,6 +191,7 @@ footer{text-align:center;color:var(--ink-2);font-size:11.5px;padding:20px}
   <button data-p="tests">Lab Tests</button>
 </nav>
 
+<div id="ptr"><i></i><span>Pull to refresh</span></div>
 <main>
 <section class="page on" id="p-overview">
   <h2>Overview</h2><p class="lead">Lulyboo account at a glance.</p>
@@ -166,34 +200,34 @@ footer{text-align:center;color:var(--ink-2);font-size:11.5px;padding:20px}
     <div class="card"><h3>👤 Client</h3><div id="client"></div></div>
     <div class="card"><h3>📅 Year comparison</h3><div class="tw"><table id="yoy"></table></div><p class="sub" style="margin:10px 0 0">By order date. Value = quantity × FOB price.</p></div>
   </div>
-  <div class="card"><h3>💳 Payments received</h3><div class="tw"><table id="pay"></table></div></div>
+  <div class="card"><h3>💳 Payments received</h3><div class="tw dt"><table id="pay"></table></div><div class="mlist" id="pay_m"></div></div>
 </section>
 
 <section class="page" id="p-orders">
   <h2>Orders</h2><p class="lead">Every purchase order with shipping dates.</p>
   <div class="tools"><input id="oq" placeholder="Search PO, item, color…"><select id="os"><option value="">All statuses</option></select></div>
-  <div class="card"><div class="tw"><table id="ot"></table></div></div>
+  <div class="card tbl"><div class="tw dt"><table id="ot"></table></div><div class="mlist" id="ot_m"></div></div>
 </section>
 
 <section class="page" id="p-invoices">
   <h2>Invoices</h2><p class="lead">One line per PO. Click a line to see its invoices (LTSI + extra cost).</p>
   <div class="tools"><div class="yr" id="iyr"></div><input id="iq" placeholder="Search PO, booking, invoice no…"><select id="is"><option value="">All statuses</option><option>Paid</option><option>Partial</option><option>Open</option><option>Pending</option></select><span class="cnt" id="icnt"></span></div>
-  <div class="card"><div class="tw"><table id="it"></table></div></div>
+  <div class="card tbl"><div class="tw dt"><table id="it"></table></div><div class="mlist" id="it_m"></div></div>
 </section>
 
 <section class="page" id="p-charges">
   <h2>Samples &amp; Charges</h2><p class="lead">Samples, molds and other charges outside regular orders.</p>
-  <div class="card"><div class="tw"><table id="ct"></table></div></div>
+  <div class="card tbl"><div class="tw dt"><table id="ct"></table></div><div class="mlist" id="ct_m"></div></div>
 </section>
 
 <section class="page" id="p-qc">
   <h2>QC Inspections</h2><p class="lead">Inspection reports per order.</p>
-  <div class="card"><div class="tw"><table id="qt"></table></div></div>
+  <div class="card tbl"><div class="tw dt"><table id="qt"></table></div><div class="mlist" id="qt_m"></div></div>
 </section>
 
 <section class="page" id="p-tests">
   <h2>Lab Tests</h2><p class="lead">Lab test reports and results.</p>
-  <div class="card"><div class="tw"><table id="tt"></table></div></div>
+  <div class="card tbl"><div class="tw dt"><table id="tt"></table></div><div class="mlist" id="tt_m"></div></div>
 </section>
 </main>
 <footer>Level Ten Fashion Limited · Lulyboo LLC</footer>
@@ -219,7 +253,7 @@ footer{text-align:center;color:var(--ink-2);font-size:11.5px;padding:20px}
 
 <script>
 /* ===== DATA — filled automatically by LULYBOO_update_dashboard.py (do not edit by hand) ===== */
-const UPDATED="17/10/2026 09:36";
+const UPDATED="17/10/2026 10:00";
 const ITEM_IMG={"DPS 001":"files/items/DPS-001.jpg","UPS 001":"files/items/UPS-001.jpg"};
 const ORDERS=[{"po":"310","date":"2025-10-28","person":"Joey","item":"Dino Potty Seat","itemNo":"DPS 001","color":"Deep blue-gray","qty":2832.0,"fob":3.15,"ready":"2025-12-29","etd":"2026-01-11","eta":"2026-02-11","status":"Delivered","link":"https://drive.google.com/file/d/1I-_dtE4W51eTv359QmCVk_TCbHF37kEf/view?usp=drive_link","note":""},{"po":"311","date":"2026-02-04","person":"Joey","item":"Dino Potty Seat","itemNo":"DPS 001","color":"Deep blue-gray","qty":3500.0,"fob":3.15,"ready":"2026-03-23","etd":"2026-04-05","eta":"2026-05-05","status":"Delivered","link":"https://drive.google.com/file/d/1JeBZwnCGxfNZ2snIDUl6KicVaqIwoMfD/view?usp=drive_link","note":""},{"po":"312","date":"2026-04-14","person":"Joey","item":"Dino Potty Seat","itemNo":"DPS 001","color":"Deep blue-gray","qty":3672.0,"fob":3.15,"ready":"2026-05-21","etd":"2026-08-13","eta":"2026-09-03","status":"Delivered","link":"https://drive.google.com/file/d/1o2qxfIj8xVgvpNt8ommNZWBHvFtbTy2Z/view?usp=drive_link","note":""},{"po":"313","date":"2026-04-29","person":"Joey","item":"Unicorn Potty Seat","itemNo":"UPS 001","color":"White & Light Pink","qty":3500.0,"fob":2.9,"ready":"2026-08-21","etd":"2026-09-17","eta":"2026-10-12","status":"Shipped","link":"https://drive.google.com/file/d/11LghNaffweDBwDTE3xNm4UAdcoDeLf2d/view?usp=drive_link","note":""},{"po":"314","date":"2026-04-29","person":"Joey","item":"Unicorn Potty Seat","itemNo":"UPS 001","color":"White & Light Pink","qty":3500.0,"fob":2.9,"ready":"2026-08-21","etd":"2026-09-17","eta":"2026-10-12","status":"Shipped","link":"https://drive.google.com/file/d/1_K1WKqNNdwxAyrNmqJpxcOH6s2TUAnSk/view?usp=drive_link","note":""},{"po":"310002","date":"2026-08-04","person":"Joey","item":"Dino Potty Seat","itemNo":"DPS 001","color":"Deep blue-gray","qty":3768.0,"fob":2.9,"ready":"2026-09-24","etd":"","eta":"","status":"In Production","link":"https://drive.google.com/file/d/1TkSHAzcLJuDg3y22IaZdCwzBIH78ibAT/view?usp=drive_link","note":""}];
 const INVOICES=[{"po":"310","type":"LTSI","no":"LTSI26010004","booking":"LULYBOO2601001","date":"2026-01-06","amount":4474.56,"paid":4474.56,"link":"https://docs.google.com/spreadsheets/d/1W17xbUWVljJcaUqXG4HUcO5holrWg_oT/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"310","type":"EXTRA COST","no":"LFDB26020003","booking":"","date":"2026-02-03","amount":4446.24,"paid":4446.24,"link":"https://drive.google.com/file/d/10b1nIerRWesRopVjQwd9IURwNEQqwAVl/view?usp=drive_link","note":"Part of LFDB26020003 - total 4,885.63"},{"po":"311","type":"LTSI","no":"LTSI26030056","booking":"LULYBOO2603002","date":"2026-03-30","amount":5530.0,"paid":5530.0,"link":"https://docs.google.com/spreadsheets/d/1Mh6P4wg6ZznEmhV2Bvakco3eASAZit4E/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"311","type":"EXTRA COST","no":"LFDB26040006","booking":"","date":"2026-03-14","amount":5495.0,"paid":5495.0,"link":"https://drive.google.com/file/d/1hO-BpQPH6oJkk1gtUuaiPzKinkm7ptz_/view?usp=drive_link","note":""},{"po":"312","type":"LTSI","no":"LTSI26080018","booking":"LULYBOO2608004","date":"2026-08-09","amount":5801.76,"paid":5801.76,"link":"https://docs.google.com/spreadsheets/d/1MXoivJDaSHqHatX_qU3gIkIVMNfTgNiC/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"312","type":"EXTRA COST","no":"LFDB26080011","booking":"LULYBOO2608004","date":"2026-08-09","amount":5765.04,"paid":5765.04,"link":"https://drive.google.com/file/d/1FmeVb7WLCglZ-DksShcE2N7mRO3hupB9/view?usp=drive_link","note":""},{"po":"313","type":"LTSI","no":"LTSI26090021","booking":"LULYBOO2609005","date":"2026-09-09","amount":1740.0,"paid":1740.0,"link":"https://drive.google.com/file/d/12a3V2mG9M6OAOgF7Cz51D2YB6474EmOh/view?usp=drive_link","note":""},{"po":"313","type":"EXTRA COST","no":"LFDB26090021","booking":"LULYBOO2609005","date":"2026-09-11","amount":1740.0,"paid":1740.0,"link":"https://docs.google.com/spreadsheets/d/1B1Hw5heBuw1kOSpde4YIG--cWs_Z1JCr/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"314","type":"LTSI","no":"LTSI26090027","booking":"LULYBOO2609006","date":"2026-09-08","amount":4176.0,"paid":4176.0,"link":"https://docs.google.com/spreadsheets/d/192vwnzVM5O71S_Fg2uYNtuWPFHnbFHvq/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"314","type":"EXTRA COST","no":"LFDB26090022","booking":"LULYBOO2609006","date":"2026-09-11","amount":4176.0,"paid":4176.0,"link":"https://drive.google.com/file/d/1D84BaevcIf3WDBVGBHTEH5-Agxg_EfZP/view?usp=drive_link","note":""},{"po":"313+314","type":"LTSI","no":"LTSI26090035","booking":"LULYBOO2609006","date":"2026-09-08","amount":4234.0,"paid":4234.0,"link":"https://docs.google.com/spreadsheets/d/1IEaXHOUD1Jtljcxkz4r92txuBiHatFli/edit?usp=drive_link&ouid=113226014349252895712&rtpof=true&sd=true","note":""},{"po":"313+314","type":"EXTRA COST","no":"LFDB26090023","booking":"LULYBOO2609007","date":"2026-09-11","amount":4234.0,"paid":3623.24,"link":"https://drive.google.com/file/d/1Km4xHuSAowqDI63_7I172dHBWLCma_CE/view?usp=drive_link","note":"need to paid 610.76$"}];
@@ -347,10 +381,10 @@ function renderOrders(){
 
 /* ---------- invoices: one clean row per PO, click to open its invoices ---------- */
 let YEAR="All";const OPEN=new Set();
-function toggleInv(po){OPEN.has(po)?OPEN.delete(po):OPEN.add(po);renderInvoices()}
+function toggleInv(po){OPEN.has(po)?OPEN.delete(po):OPEN.add(po);renderInvoices();if(MOBILE)mInvoices()}
 function renderInvoices(){
   const years=[...new Set(POS.map(b=>b.year).filter(Boolean))].sort();
-  $("#iyr").innerHTML=["All",...years].map(y=>`<button class="${y===YEAR?"on":""}" onclick="YEAR='${y}';renderInvoices()">${y}</button>`).join("");
+  $("#iyr").innerHTML=["All",...years].map(y=>`<button class="${y===YEAR?"on":""}" onclick="YEAR='${y}';renderInvoices();if(MOBILE)mInvoices()">${y}</button>`).join("");
   const q=$("#iq").value.toLowerCase(),s=$("#is").value;
   const rows=POS.filter(b=>(YEAR==="All"||b.year===YEAR)&&(!s||b.status===s)&&
     (!q||(b.o.po+" "+[...b.books].join(" ")+" "+b.inv.map(i=>i.no).join(" ")).toLowerCase().includes(q)));
@@ -367,7 +401,7 @@ function renderInvoices(){
     if(isOpen&&!pend){
       const notes=[...new Set(b.inv.map(i=>i.note).filter(Boolean))];
       h+=`<tr class="invsub"><td colspan="10"><div class="inner"><table>
-        <tr class="ih"><td></td><td>Invoice</td><td>Date</td><td>Booking</td><td class="num">Amount</td><td class="num">Paid</td><td class="num">Open</td><td>Status</td><td></td></tr>
+        <tr class="ih"><td></td><td>Invoice</td><td>Date</td><td>Booking</td><td class="num">Amount</td><td class="num">Paid</td><td class="num">Open</td><td>Status</td></tr>
         ${b.inv.map(i=>{const L=/^LTSI/i.test(i.type),w=i.w??1;
         const A=(+i.amount||0)*w,P=(+i.paid||0)*w,O=Math.max(0,A-P);
         const others=poList(i.po).filter(p=>p!==o.po);
@@ -375,10 +409,10 @@ function renderInvoices(){
         if(others.length){const sp=SPLIT[i.no]||{},full=+i.amount||0,fo=Math.max(0,full-(+i.paid||0));
           shared=`<div class="shr">Shared invoice ${esc(i.po)} · full amount ${money(full)}${fo>0.005?` · open ${money(fo)} = `+Object.entries(sp).map(([p,v])=>`PO ${esc(p)} ${money(Math.max(0,v.amt-v.paid))}`).join(" + "):" · fully paid"}</div>`}
         return `<tr><td style="width:70px"><span class="tag ${L?"L":"E"}">${L?"LTSI":"EXTRA"}</span></td>
-          <td><b>${esc(i.no)}</b>${shared}</td><td>${d(i.date)}</td><td>${esc(i.booking)||DASH}</td>
+          <td>${i.link?`<button class="invno" onclick="event.stopPropagation();openView(${vid(i.link,i.no+" · PO "+i.po)})">📄 ${esc(i.no)}</button>`:`<b>${esc(i.no)}</b>`}${shared}</td><td>${d(i.date)}</td><td>${esc(i.booking)||DASH}</td>
           <td class="num">${money(A)}</td><td class="num" style="color:var(--ok)">${P?money(P):DASH}</td>
           <td class="num">${O>0.005?`<b style="color:#B07A00">${money(O)}</b>`:DASH}</td>
-          <td>${pill(statusOf(A,P))}</td><td>${link(i.link,"Invoice",i.no+" · PO "+i.po)}</td></tr>`}).join("")}</table>
+          <td>${pill(statusOf(A,P))}</td></tr>`}).join("")}</table>
         ${notes.length?`<div class="sub" style="margin-top:8px">📝 ${notes.map(esc).join(" · ")}</div>`:""}</div></td></tr>`}});
   const inv=rows.filter(b=>b.status!=="Pending");
   h+=`</tbody><tfoot><tr><td></td><td colspan="2">Total invoiced · ${inv.length} POs${rows.length>inv.length?` <span class="sub">(+${rows.length-inv.length} pending)</span>`:""}</td><td class="num">${money(inv.reduce((a,b)=>a+b.amt,0))}</td><td class="num">${money(inv.reduce((a,b)=>a+b.paid,0))}</td><td class="num">${money(inv.reduce((a,b)=>a+b.open,0))}</td><td colspan="4"></td></tr></tfoot>`;
@@ -412,6 +446,75 @@ function renderTests(){
   $("#tt").innerHTML=h+"</tbody>";
 }
 
+
+/* ===== phone / app: card renderers ===== */
+const MQ=window.matchMedia("(max-width:760px)");let MOBILE=MQ.matches;
+const pctBar=(paid,open,t)=>{t=t||1;const pw=Math.min(100,paid/t*100),ow=Math.min(100-pw,open/t*100);return `<div class="bar"><i class="paid" style="width:${pw}%"></i><i class="open" style="width:${ow}%"></i></div>`};
+const g3=items=>`<div class="g">${items.map(([l,v])=>`<div>${l}<b>${v}</b></div>`).join("")}</div>`;
+function mOrders(){
+  const q=$("#oq").value.toLowerCase(),s=$("#os").value;
+  const rows=ORDERS.filter(o=>(!s||o.status===s)&&(!q||JSON.stringify(o).toLowerCase().includes(q)));
+  $("#ot_m").innerHTML=rows.map(o=>`<div class="mc"><div class="oc">${img(o)}<div style="flex:1;min-width:0"><div class="r"><span class="po">PO ${esc(o.po)}</span>${pill(o.status)}</div>
+    <div class="sub">${esc(o.item)} · ${esc(o.itemNo)}${o.color?" · "+esc(o.color):""}</div></div></div>
+    ${g3([["Qty",qty(o.qty)],["FOB",money(o.fob)],["Total",money(orderTotal(o))],["Ready",d(o.ready)],["ETD",d(o.etd)],["ETA",d(o.eta)]])}
+    <div class="r" style="margin-top:8px"><span class="sub">Order ${d(o.date)}${o.person?" · "+esc(o.person):""}</span>${link(o.link,"PO","PO "+o.po)}</div>
+    ${o.note?`<div class="note">${esc(o.note)}</div>`:""}</div>`).join("")||'<div class="empty"><b>No orders</b></div>';
+}
+function mInvoices(){
+  const q=$("#iq").value.toLowerCase(),s=$("#is").value;
+  const rows=POS.filter(b=>(YEAR==="All"||b.year===YEAR)&&(!s||b.status===s)&&
+    (!q||(b.o.po+" "+[...b.books].join(" ")+" "+b.inv.map(i=>i.no).join(" ")).toLowerCase().includes(q)));
+  $("#it_m").innerHTML=rows.map(b=>{const o=b.o,pend=b.status==="Pending",isOpen=OPEN.has(o.po);
+    let h=`<div class="mc" ${pend?"":`onclick="toggleInv('${esc(o.po)}')"`}><div class="r"><span class="po">PO ${esc(o.po)}</span>${pill(b.status)}</div>
+      <div class="big">${money(pend?b.total:b.amt)}</div>
+      <div class="sub">${pend?"Not invoiced yet":`Paid ${money(b.paid)}${b.open>0.005?` · <span class="open">Open ${money(b.open)}</span>`:""}`}${o.eta?" · ETA "+d(o.eta):""}</div>
+      ${pctBar(b.paid,b.open,pend?b.total:b.amt)}`;
+    if(!pend&&!isOpen)h+=`<div class="sub">▸ ${b.inv.length} invoices</div>`;
+    if(!pend&&isOpen){h+=`<div class="inv">${b.inv.map(i=>{const L=/^LTSI/i.test(i.type),w=i.w??1,A=(+i.amount||0)*w,P=(+i.paid||0)*w;
+        return `<div class="il"><span><span class="tag ${L?"L":"E"}">${L?"LTSI":"EXTRA"}</span>${i.link?`<button class="invno" onclick="event.stopPropagation();openView(${vid(i.link,i.no+" · PO "+i.po)})">📄 ${esc(i.no)}</button>`:`<b>${esc(i.no)}</b>`}</span>
+          <span>${money(A)} ${pill(statusOf(A,P))}</span></div>`}).join("")}`;
+      const sh=b.inv.filter(i=>poList(i.po).length>1);
+      if(sh.length){const others=[...new Set(sh.flatMap(i=>poList(i.po)).filter(p=>p!==o.po))];h+=`<div class="sub" style="margin-top:4px">Shared with ${others.map(esc).join(", ")}${b.open>0.005?` · <span class="open">open ${money(b.open)}</span>`:""}</div>`}
+      const notes=[...new Set(b.inv.map(i=>i.note).filter(Boolean))];if(notes.length)h+=`<div class="note">📝 ${notes.map(esc).join(" · ")}</div>`;
+      h+=`</div>`}
+    return h+`</div>`}).join("")||'<div class="empty"><b>No invoices</b></div>';
+}
+function mCharges(){
+  $("#ct_m").innerHTML=CHARGES.map(c=>{const A=+c.amount||0,P=+c.paid||0,O=Math.max(0,A-P);
+    return `<div class="mc"><div class="r">${c.link?`<button class="invno" onclick="openView(${vid(c.link,c.no+" · "+c.desc)})">📄 ${esc(c.no)}</button>`:`<b>${esc(c.no)}</b>`}${pill(statusOf(A,P))}</div>
+      <div class="sub" style="margin-top:4px">${esc(c.desc)}${c.related?" · "+esc(c.related):""}</div>
+      ${g3([["Date",d(c.date)],["Amount",money(A)],[O>0.005?"Open":"Paid",O>0.005?`<span class="open">${money(O)}</span>`:money(P)]])}
+      ${c.note?`<div class="note">${esc(c.note)}</div>`:""}</div>`}).join("")||'<div class="empty"><b>No charges yet</b></div>';
+}
+function mQC(){
+  $("#qt_m").innerHTML=QCS.map(x=>`<div class="mc"><div class="r"><span class="po">PO ${esc(x.po)}</span>${pill(x.result)}</div>
+    <div class="sub">${esc(x.item)} · ${esc(x.itemNo)}</div>
+    ${g3([["Date",d(x.date)],["Type",esc(x.type)||DASH],["Inspector",esc(x.inspector)||DASH]])}
+    <div class="r" style="margin-top:8px">${link(x.link,"QC report","QC · PO "+x.po+" · "+x.item)}${x.note?noteBtn("📋 "+x.item+" — PO "+x.po,x.note):""}</div></div>`).join("")||'<div class="empty"><b>No QC reports yet</b></div>';
+}
+function mTests(){
+  $("#tt_m").innerHTML=TESTS.map(x=>`<div class="mc"><div class="r"><span class="po">${x.po?"PO "+esc(x.po):esc(x.item)}</span>${pill(x.result)}</div>
+    <div class="sub">${esc(x.item)} · ${esc(x.itemNo)}</div>
+    ${g3([["Date",d(x.date)],["Lab",esc(x.lab)||DASH],["Report",esc(x.report)||DASH]])}
+    <div class="note">${esc(x.tests)}</div>
+    <div class="r" style="margin-top:8px">${link(x.link,"Report","Lab test · "+x.item+(x.report?" · "+x.report:""))}${x.note?noteBtn("🧪 "+x.item+(x.report?" — "+x.report:""),x.note):""}</div></div>`).join("")||'<div class="empty"><b>No lab tests yet</b></div>';
+}
+function mPayments(){
+  const ps=[...PAYMENTS].sort((a,b)=>(b.date||"").localeCompare(a.date||""));
+  $("#pay_m").innerHTML=ps.map(p=>`<div class="mc"><div class="r"><span class="po">${money(p.amount)}</span><span class="sub">${d(p.date)}</span></div>
+    <div class="sub" style="margin-top:4px">${p.po?"PO "+esc(p.po):""}${p.ref?" · Ref "+esc(p.ref):""}</div>
+    ${p.applied?`<div class="note">${esc(p.applied)}</div>`:""}${p.note?`<div class="note">${esc(p.note)}</div>`:""}
+    ${p.link?`<div style="margin-top:6px">${link(p.link,"Proof","Payment "+p.date)}</div>`:""}</div>`).join("")||'<div class="empty"><b>No payments yet</b></div>';
+}
+function renderMobile(){if(!MOBILE)return;mOrders();mInvoices();mCharges();mQC();mTests();mPayments()}
+MQ.addEventListener("change",e=>{MOBILE=e.matches;renderMobile()});
+/* pull to refresh (phone) */
+(function(){let y0=null,dy=0;const P=()=>document.getElementById("ptr");
+  window.addEventListener("touchstart",e=>{if(window.scrollY<=0&&!document.querySelector("#pdfViewer[style*='flex']"))y0=e.touches[0].clientY;else y0=null},{passive:true});
+  window.addEventListener("touchmove",e=>{if(y0==null)return;dy=e.touches[0].clientY-y0;if(dy>0){const h=Math.min(70,dy*.5);P().style.height=h+"px";P().querySelector("span").textContent=h>=55?"Release to refresh":"Pull to refresh"}},{passive:true});
+  window.addEventListener("touchend",()=>{if(y0==null)return;const p=P();if(parseFloat(p.style.height)>=55){p.classList.add("spin");p.querySelector("span").textContent="Refreshing…";location.reload()}else p.style.height="0";y0=null;dy=0});
+})();
+
 /* ---------- clocks: Yiwu (China) + Irvine (California) ---------- */
 function tick(){const now=new Date();
   [["Asia/Shanghai",1],["America/Los_Angeles",2]].forEach(([tz,i])=>{
@@ -424,13 +527,13 @@ document.addEventListener("DOMContentLoaded",()=>{
   POS=buildPOfixed();tick();setInterval(tick,20000);
   $("#upd").textContent=UPDATED||"—";
   [...new Set(ORDERS.map(o=>o.status).filter(Boolean))].forEach(s=>$("#os").insertAdjacentHTML("beforeend",`<option>${esc(s)}</option>`));
-  ["#oq","#os"].forEach(s=>$(s).addEventListener("input",renderOrders));
-  ["#iq","#is"].forEach(s=>$(s).addEventListener("input",renderInvoices));
+  ["#oq","#os"].forEach(s=>$(s).addEventListener("input",()=>{renderOrders();if(MOBILE)mOrders()}));
+  ["#iq","#is"].forEach(s=>$(s).addEventListener("input",()=>{renderInvoices();if(MOBILE)mInvoices()}));
   document.querySelectorAll("#nav button").forEach(b=>b.addEventListener("click",()=>{
     document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("on",x===b));
     document.querySelectorAll(".page").forEach(p=>p.classList.toggle("on",p.id==="p-"+b.dataset.p));
     window.scrollTo(0,0)}));
-  renderOverview();renderOrders();renderInvoices();renderCharges();renderQC();renderTests();
+  renderOverview();renderOrders();renderInvoices();renderCharges();renderQC();renderTests();renderMobile();
 });
 </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
