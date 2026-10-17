@@ -1,6 +1,6 @@
 // Lulyboo Dashboard service worker - always tries the live site first,
 // falls back to the last saved copy only when there is no internet.
-const CACHE = 'lulyboo-dash-v1';
+const CACHE = 'lulyboo-dash-v2';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
 self.addEventListener('fetch', e => {
